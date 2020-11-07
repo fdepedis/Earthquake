@@ -3,6 +3,7 @@ package it.fdepedis.earthquake.activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -25,7 +26,9 @@ import retrofit2.Response;
 
 public class EarthquakeActivity extends AppCompatActivity {
 
-    private EarthquakeAdapter postAdapter;
+    private static final String LOG_TAG = EarthquakeActivity.class.getName();
+
+    private EarthquakeAdapter earthquakeAdapter;
     private RecyclerView recyclerView;
     ProgressDialog progressDialog;
 
@@ -58,11 +61,14 @@ public class EarthquakeActivity extends AppCompatActivity {
 
     /* Method to generate List of data using RecyclerView with custom adapter */
     private void generateDataList(List<EarthquakeBean> earthquakeBeanList) {
-        recyclerView = findViewById(R.id.postRecyclerView);
-        postAdapter = new EarthquakeAdapter(this, earthquakeBeanList);
+
+        Log.e(LOG_TAG, "earthquakeBeanList: " + earthquakeBeanList);
+
+        recyclerView = findViewById(R.id.recycler_view);
+        earthquakeAdapter = new EarthquakeAdapter(this, earthquakeBeanList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(EarthquakeActivity.this);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(postAdapter);
+        recyclerView.setAdapter(earthquakeAdapter);
     }
 
     @Override
