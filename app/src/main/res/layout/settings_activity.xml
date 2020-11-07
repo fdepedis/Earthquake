@@ -1,6 +1,6 @@
 
 <fragment
-    android:name="it.fdepedis.quakereport.settings.SettingsActivity$EarthquakePreferenceFragment"
+    android:name="it.fdepedis.earthquake.settings.SettingsActivity$EarthquakePreferenceFragment"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
