@@ -54,8 +54,8 @@ public class EarthquakeAdapter extends RecyclerView.Adapter<EarthquakeAdapter.Ph
         Picasso.Builder builder = new Picasso.Builder(context);
         builder.downloader(new OkHttp3Downloader(context));
         builder.build().load(dataList.get(position).getThumbnailUrl())
-                .placeholder((R.drawable.ic_launcher_background))
-                .error(R.drawable.ic_launcher_background)
+                .placeholder((R.drawable.ic_stat_album))
+                .error(R.drawable.ic_stat_album)
                 .into(holder.coverImage);
     }
 
