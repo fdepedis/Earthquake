@@ -2,7 +2,7 @@ package it.fdepedis.earthquake.settings;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
+import androidx.preference.PreferenceManager;
 
 import it.fdepedis.earthquake.R;
 
