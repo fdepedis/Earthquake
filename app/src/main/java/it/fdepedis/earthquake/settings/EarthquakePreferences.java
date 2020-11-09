@@ -30,7 +30,7 @@ public class EarthquakePreferences {
     }
 
     /**
-     * Get Min Magnitude in General -> Preferences
+     * Get Min Magnitude preference in General
      * */
     public static String getMinMagnitudePreferences(Context context) {
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -51,6 +51,30 @@ public class EarthquakePreferences {
                 context.getString(R.string.settings_min_mag_notify_default));
 
         return minMagNotification;
+    }
+
+    /**
+     * Get OrderBy preference in General
+     * */
+    public static String getOrderByPreferences(Context context) {
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+        String orderBy = sharedPrefs.getString(
+                context.getString(R.string.settings_order_by_key),
+                context.getString(R.string.settings_order_by_default));
+
+        return orderBy;
+    }
+
+    /**
+     * Get NumItems preference in General
+     * */
+    public static String getNumItemsPreferences(Context context) {
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+        String numItems = sharedPrefs.getString(
+                context.getString(R.string.settings_num_item_key),
+                context.getString(R.string.settings_num_item_default));
+
+        return numItems;
     }
 
 }
