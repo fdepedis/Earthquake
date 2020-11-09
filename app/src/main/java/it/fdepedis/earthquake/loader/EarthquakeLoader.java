@@ -41,9 +41,9 @@ public class EarthquakeLoader extends AsyncTaskLoader<List<EarthquakeBean>> {
 
         Log.e(LOG_TAG, "Log - in loadInBackground() method");
 
-        if (mUrl == null) {
+        /*if (mUrl == null) {
             return null;
-        }
+        }*/
 
         /* Create handle for the RetrofitInstance interface */
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
@@ -52,9 +52,9 @@ public class EarthquakeLoader extends AsyncTaskLoader<List<EarthquakeBean>> {
             @Override
             public void onResponse(Call<List<EarthquakeBean>> call, Response<List<EarthquakeBean>> response) {
                 //progressDialog.dismiss();
-                generateDataList(response.body());
+                //generateDataList(response.body());
                 earthquakes = response.body();
-                Log.e(LOG_TAG, "onResponse - earthquakes: " + earthquakes);
+                //Log.e(LOG_TAG, "onResponse - earthquakes: " + response.body());
             }
 
             @Override

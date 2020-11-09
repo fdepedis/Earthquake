@@ -70,7 +70,7 @@ public class EarthquakeActivity extends AppCompatActivity
             android.app.LoaderManager loaderManager = getLoaderManager();
 
             Log.d(LOG_TAG, "Log - in before initLoader() call");
-            getSupportLoaderManager().initLoader(EARTHQUAKE_LOADER_ID, null, this).forceLoad();
+            getSupportLoaderManager().initLoader(EARTHQUAKE_LOADER_ID, null, this);
 
             Log.d(LOG_TAG, "Log - in after initLoader() call");
         } /*else {
