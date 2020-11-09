@@ -7,8 +7,11 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -75,9 +78,13 @@ public class EarthquakeLoader extends AsyncTaskLoader<List<EarthquakeBean>> {
                 //progressDialog.dismiss();
                 //generateDataList(response.body());
                 //earthquakes = response.body();
-                String s = String.valueOf(response.body());
-                //JsonArray user_array= response.getAsJsonArray("user_array");
-                Log.e(LOG_TAG, "onResponse - earthquakes: " + s);
+
+                if(response!=null && response.isSuccessful()) {
+                    //JsonObject earthquakeBeans = response.body();
+                    JsonArray features_array = response.body().getAsJsonArray("features");
+                    Log.e(LOG_TAG, "onResponse - earthquakes: " + features_array);
+                }
+
             }
 
             @Override
