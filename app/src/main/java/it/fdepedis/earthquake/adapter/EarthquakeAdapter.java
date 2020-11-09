@@ -14,23 +14,24 @@ import java.util.List;
 import androidx.recyclerview.widget.RecyclerView;
 import it.fdepedis.earthquake.model.EarthquakeBean;
 
-public class EarthquakeAdapter extends RecyclerView.Adapter<EarthquakeAdapter.PhotoViewHolder> {
+public class EarthquakeAdapter extends RecyclerView.Adapter<EarthquakeAdapter.EarthquakeViewHolder> {
 
     private List<EarthquakeBean> dataList;
     private Context context;
+    private List<EarthquakeBean> data;
 
     public EarthquakeAdapter(Context context, List<EarthquakeBean> dataList){
         this.context = context;
         this.dataList = dataList;
     }
 
-    class PhotoViewHolder extends RecyclerView.ViewHolder {
+    class EarthquakeViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
 
         TextView txtTitle;
         private ImageView coverImage;
 
-        PhotoViewHolder(View itemView) {
+        EarthquakeViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
 
@@ -40,14 +41,14 @@ public class EarthquakeAdapter extends RecyclerView.Adapter<EarthquakeAdapter.Ph
     }
 
     @Override
-    public PhotoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public EarthquakeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.photo_row, parent, false);
-        return new PhotoViewHolder(view);
+        return new EarthquakeViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(PhotoViewHolder holder, int position) {
+    public void onBindViewHolder(EarthquakeViewHolder holder, int position) {
 
         holder.txtTitle.setText(dataList.get(position).getTitle());
 
@@ -62,5 +63,10 @@ public class EarthquakeAdapter extends RecyclerView.Adapter<EarthquakeAdapter.Ph
     @Override
     public int getItemCount() {
         return dataList.size();
+    }
+
+    public void setData(List<EarthquakeBean> data) {
+        this.data = data;
+        notifyDataSetChanged();
     }
 }
