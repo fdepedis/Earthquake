@@ -4,47 +4,44 @@ import com.google.gson.annotations.SerializedName;
 
 public class EarthquakeBean {
 
-    @SerializedName("albumId")
-    private Integer albumId;
-    @SerializedName("id")
-    private Integer id;
-    @SerializedName("title")
-    private String title;
+    @SerializedName("mag")
+    private String mag;
+    @SerializedName("place")
+    private String place;
+    @SerializedName("time")
+    private String time;
     @SerializedName("url")
     private String url;
-    @SerializedName("thumbnailUrl")
-    private String thumbnailUrl;
 
-    public EarthquakeBean(Integer albumId, Integer id, String title, String url, String thumbnailUrl) {
-        this.albumId = albumId;
-        this.id = id;
-        this.title = title;
+    public EarthquakeBean(String mag, String place, String time, String url) {
+        this.mag = mag;
+        this.place = place;
+        this.time = time;
         this.url = url;
-        this.thumbnailUrl = thumbnailUrl;
     }
 
-    public Integer getAlbumId() {
-        return albumId;
+    public String getMag() {
+        return mag;
     }
 
-    public void setAlbumId(Integer albumId) {
-        this.albumId = albumId;
+    public void setMag(String mag) {
+        this.mag = mag;
     }
 
-    public Integer getId() {
-        return id;
+    public String getPlace() {
+        return place;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setPlace(String place) {
+        this.place = place;
     }
 
-    public String getTitle() {
-        return title;
+    public String getTime() {
+        return time;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setTime(String time) {
+        this.time = time;
     }
 
     public String getUrl() {
@@ -55,11 +52,4 @@ public class EarthquakeBean {
         this.url = url;
     }
 
-    public String getThumbnailUrl() {
-        return thumbnailUrl;
-    }
-
-    public void setThumbnailUrl(String thumbnailUrl) {
-        this.thumbnailUrl = thumbnailUrl;
-    }
 }

@@ -7,6 +7,9 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -63,23 +66,23 @@ public class EarthquakeLoader extends AsyncTaskLoader<List<EarthquakeBean>> {
 
         Log.e(LOG_TAG, "Log - in loadInBackground() method");
 
-        /*if (mUrl == null) {
-            return null;
-        }*/
-
-
-        Call<List<EarthquakeBean>> call = service.getEarthquakes(data);
-        call.enqueue(new Callback<List<EarthquakeBean>>() {
+        //Call<List<EarthquakeBean>> call = service.getEarthquakes(data);
+        //Call<List<EarthquakeBean>> call = service.getEarthquakesTest();
+        Call<JsonObject> call = service.getEarthquakesTest();
+        /*call.enqueue(new Callback<List<EarthquakeBean>>() {*/
+        call.enqueue(new Callback<JsonObject>() {
             @Override
-            public void onResponse(Call<List<EarthquakeBean>> call, Response<List<EarthquakeBean>> response) {
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 //progressDialog.dismiss();
                 //generateDataList(response.body());
-                earthquakes = response.body();
-                //Log.e(LOG_TAG, "onResponse - earthquakes: " + response.body());
+                //earthquakes = response.body();
+                String s = String.valueOf(response.body());
+                //JsonArray user_array= response.getAsJsonArray("user_array");
+                Log.e(LOG_TAG, "onResponse - earthquakes: " + s);
             }
 
             @Override
-            public void onFailure(Call<List<EarthquakeBean>> call, Throwable t) {
+            public void onFailure(Call<JsonObject> call, Throwable t) {
                 //progressDialog.dismiss();
                 Toast.makeText(getContext(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
                 Log.e(LOG_TAG, "onFailure - t: " + t);

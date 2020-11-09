@@ -18,7 +18,6 @@ public class EarthquakeAdapter extends RecyclerView.Adapter<EarthquakeAdapter.Ea
 
     private List<EarthquakeBean> dataList;
     private Context context;
-    private List<EarthquakeBean> data;
 
     public EarthquakeAdapter(Context context, List<EarthquakeBean> dataList){
         this.context = context;
@@ -28,36 +27,36 @@ public class EarthquakeAdapter extends RecyclerView.Adapter<EarthquakeAdapter.Ea
     class EarthquakeViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
 
-        TextView txtTitle;
-        private ImageView coverImage;
+        TextView txtPlace;
+        //private ImageView coverImage;
 
         EarthquakeViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
 
-            txtTitle = mView.findViewById(R.id.title);
-            coverImage = mView.findViewById(R.id.coverImage);
+            txtPlace = mView.findViewById(R.id.place);
+            //coverImage = mView.findViewById(R.id.coverImage);
         }
     }
 
     @Override
     public EarthquakeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.photo_row, parent, false);
+        View view = layoutInflater.inflate(R.layout.earthquake_row, parent, false);
         return new EarthquakeViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(EarthquakeViewHolder holder, int position) {
 
-        holder.txtTitle.setText(dataList.get(position).getTitle());
+        holder.txtPlace.setText(dataList.get(position).getPlace());
 
-        Picasso.Builder builder = new Picasso.Builder(context);
+        /*Picasso.Builder builder = new Picasso.Builder(context);
         builder.downloader(new OkHttp3Downloader(context));
         builder.build().load(dataList.get(position).getThumbnailUrl())
                 .placeholder((R.drawable.ic_stat_album))
                 .error(R.drawable.ic_stat_album)
-                .into(holder.coverImage);
+                .into(holder.coverImage);*/
     }
 
     @Override
@@ -66,7 +65,7 @@ public class EarthquakeAdapter extends RecyclerView.Adapter<EarthquakeAdapter.Ea
     }
 
     public void setData(List<EarthquakeBean> data) {
-        this.data = data;
+        this.dataList = data;
         notifyDataSetChanged();
     }
 }
