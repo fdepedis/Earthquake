@@ -25,6 +25,7 @@ import it.fdepedis.earthquake.settings.EarthquakePreferences;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.Path;
 
 public class EarthquakeLoader extends AsyncTaskLoader<List<EarthquakeBean>> {
 
@@ -54,10 +55,9 @@ public class EarthquakeLoader extends AsyncTaskLoader<List<EarthquakeBean>> {
 
 
         //data.put("format", "geojson");
-        data.put("limit", numItems);
-        data.put("minmag", minMagnitude);
         data.put("orderby", orderBy);
-
+        data.put("minmag", minMagnitude);
+        //data.put("limit", numItems);
         forceLoad();
     }
 
@@ -66,8 +66,7 @@ public class EarthquakeLoader extends AsyncTaskLoader<List<EarthquakeBean>> {
 
         Log.e(LOG_TAG, "Log - in loadInBackground() method");
 
-        //Call<List<EarthquakeBean>> call = service.getEarthquakes(data);
-        //Call<List<EarthquakeBean>> call = service.getEarthquakesTest();
+        //Call<JsonObject> call = service.getEarthquakes(data);
         Call<JsonObject> call = service.getEarthquakesTest();
         /*call.enqueue(new Callback<List<EarthquakeBean>>() {*/
         call.enqueue(new Callback<JsonObject>() {
