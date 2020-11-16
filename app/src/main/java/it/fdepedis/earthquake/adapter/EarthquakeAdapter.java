@@ -4,12 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import it.fdepedis.earthquake.R;
-
-import com.jakewharton.picasso.OkHttp3Downloader;
-import com.squareup.picasso.Picasso;
 import java.util.List;
 import androidx.recyclerview.widget.RecyclerView;
 import it.fdepedis.earthquake.model.EarthquakeBean;

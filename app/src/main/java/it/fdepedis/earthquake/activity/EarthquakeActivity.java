@@ -19,7 +19,6 @@ import androidx.loader.app.LoaderManager;
 import androidx.loader.content.Loader;
 import it.fdepedis.earthquake.R;
 import it.fdepedis.earthquake.adapter.EarthquakeAdapter;
-import it.fdepedis.earthquake.loader.EarthquakeLoader;
 import it.fdepedis.earthquake.model.EarthquakeBean;
 import it.fdepedis.earthquake.network.GetDataService;
 import it.fdepedis.earthquake.network.RetrofitClientInstance;
@@ -36,8 +35,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class EarthquakeActivity extends AppCompatActivity
-        implements LoaderManager.LoaderCallbacks<List<EarthquakeBean>> {
+public class EarthquakeActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = EarthquakeActivity.class.getName();
     private Context context;
@@ -46,6 +44,7 @@ public class EarthquakeActivity extends AppCompatActivity
     private RecyclerView recyclerView;
     private int mPosition = RecyclerView.NO_POSITION;
     private TextView mEmptyStateTextView;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +52,10 @@ public class EarthquakeActivity extends AppCompatActivity
         setContentView(R.layout.activity_earthquake);
 
         context = this;
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Loading....");
+        progressDialog.show();
 
         recyclerView = findViewById(R.id.recycler_view);
         earthquakeAdapter = new EarthquakeAdapter(this, new ArrayList<EarthquakeBean>());
@@ -70,7 +73,7 @@ public class EarthquakeActivity extends AppCompatActivity
             android.app.LoaderManager loaderManager = getLoaderManager();
 
             Log.d(LOG_TAG, "Log - in before initLoader() call");
-            getSupportLoaderManager().initLoader(EARTHQUAKE_LOADER_ID, null, this);
+
 
             Log.d(LOG_TAG, "Log - in after initLoader() call");
         } /*else {
@@ -80,12 +83,13 @@ public class EarthquakeActivity extends AppCompatActivity
         }*/
 
 
-        /* Create handle for the RetrofitInstance interface *//*
+        /* Create handle for the RetrofitInstance interface */
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
-        Call<List<EarthquakeBean>> call = service.getAllPhotos();
+        Call<List<EarthquakeBean>> call = service.getEarthquakesTest();
         call.enqueue(new Callback<List<EarthquakeBean>>() {
             @Override
             public void onResponse(Call<List<EarthquakeBean>> call, Response<List<EarthquakeBean>> response) {
+                Log.e(LOG_TAG, "response: " + response.body());
                 progressDialog.dismiss();
                 generateDataList(response.body());
             }
@@ -95,49 +99,18 @@ public class EarthquakeActivity extends AppCompatActivity
                 progressDialog.dismiss();
                 Toast.makeText(EarthquakeActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
-        });*/
+        });
     }
 
     /* Method to generate List of data using RecyclerView with custom adapter */
-    /*private void generateDataList(List<EarthquakeBean> earthquakeBeanList) {
+    private void generateDataList(List<EarthquakeBean> earthquakeBean) {
 
-        Log.e(LOG_TAG, "earthquakeBeanList: " + earthquakeBeanList);
-
-    }*/
-
-    @NonNull
-    @Override
-    public Loader<List<EarthquakeBean>> onCreateLoader(int id, @Nullable Bundle bundle) {
-
-        //String dataToFetch = Utils.refreshData(context);
-        Log.e(LOG_TAG, "onCreateLoader: " + id);
-
-        return new EarthquakeLoader(context);
-    }
-
-    @Override
-    public void onLoadFinished(@NonNull Loader<List<EarthquakeBean>> loader, List<EarthquakeBean> data) {
-        Log.e(LOG_TAG, "onLoadFinished: " + data);
-
-        // Hide loading indicator because the data has been loaded
-        View loadingIndicator = findViewById(R.id.loading_indicator);
-        loadingIndicator.setVisibility(View.GONE);
-
-        // Set empty state text to display "No earthquakes found."
-        mEmptyStateTextView.setText(R.string.no_earthquakes);
-
-        if (mPosition == RecyclerView.NO_POSITION) mPosition = 0;
-        recyclerView.smoothScrollToPosition(mPosition);
-        // If there is a valid list of {@link Earthquake}s, then add them to the adapter's
-        // data set. This will trigger the ListView to update.
-        if (data != null && !data.isEmpty()) {
-            earthquakeAdapter.setData(data);
-        }
-    }
-
-    @Override
-    public void onLoaderReset(@NonNull Loader<List<EarthquakeBean>> loader) {
-        earthquakeAdapter.setData(new ArrayList<EarthquakeBean>());
+        Log.e(LOG_TAG, "earthquakeBean: " + earthquakeBean);
+        recyclerView = findViewById(R.id.recycler_view);
+        earthquakeAdapter = new EarthquakeAdapter(this, earthquakeBean);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(earthquakeAdapter);
     }
 
     @Override

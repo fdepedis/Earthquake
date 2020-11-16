@@ -22,8 +22,8 @@ public interface GetDataService {
             @QueryMap Map<String, String> options
     );
 
-    @GET("/fdsnws/event/1/query?format=geojson&orderby=time&minmag=6&limit=10")
-    Call<JsonObject> getEarthquakesTest();
+    @GET("/query?format=geojson&orderby=time&minmag=6&limit=10")
+    Call<List<EarthquakeBean>> getEarthquakesTest();
 
     /*@GET("/query?format=geojson&orderby={orderby}&minmag={mag}")
             //&orderby=time&minmag=6&limit=10")
