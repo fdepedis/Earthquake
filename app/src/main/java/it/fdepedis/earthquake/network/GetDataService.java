@@ -35,4 +35,11 @@ public interface GetDataService {
 
     @GET("/photos")
     Call<List<EarthquakeBean>> getAllPhotos();
+
+    @GET("/fdsnws/event/1/query?")
+    Call<List<EarthquakeBean>> getEarthQuakes(
+            @Query("format") String format,
+            @Query("minmagnitude") String minMagnitude,
+            @Query("starttime") String startTime,
+            @Query("orderby") String orderBy);
 }
