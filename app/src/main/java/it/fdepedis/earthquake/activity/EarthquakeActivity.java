@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,6 +29,7 @@ import java.util.Map;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import it.fdepedis.earthquake.settings.EarthquakePreferences;
 import it.fdepedis.earthquake.settings.SettingsActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,13 +39,13 @@ public class EarthquakeActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = EarthquakeActivity.class.getName();
     private Context context;
-    private static final int EARTHQUAKE_LOADER_ID = 1;
     private EarthquakeAdapter earthquakeAdapter;
     private List<FeatureBean> featureBeanList;
     private RecyclerView recyclerView;
     private int mPosition = RecyclerView.NO_POSITION;
     private TextView mEmptyStateTextView;
-    ProgressDialog progressDialog;
+    private ProgressDialog progressDialog;
+    boolean doubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,14 +66,15 @@ public class EarthquakeActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(earthquakeAdapter);
 
-
+        String minMagPrefs = EarthquakePreferences.getMinMagnitudePreferences(context);
+        String orderByPrefs = EarthquakePreferences.getOrderByPreferences(context);
+        String numItemPrefs = EarthquakePreferences.getNumItemsPreferences(context);
 
         Map<String, String> parameters = new HashMap<>();
         parameters.put("format", "geojson");
-        parameters.put("orderby", "time");
-        parameters.put("minmag", "2");
-        //parameters.put("maxmagnitude", "6");
-        parameters.put("limit", "10");
+        parameters.put("orderby", orderByPrefs);
+        parameters.put("minmag", minMagPrefs);
+        parameters.put("limit", numItemPrefs);
 
 
         /* Create handle for the RetrofitInstance interface */
@@ -138,5 +141,24 @@ public class EarthquakeActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
     }
 }
