@@ -17,12 +17,12 @@ public class PropertiesBean {
         return mag;
     }
 
-    public String getPlace() {
-        return place;
-    }
-
     public void setMag(String mag) {
         this.mag = mag;
+    }
+
+    public String getPlace() {
+        return place;
     }
 
     public void setPlace(String place) {
