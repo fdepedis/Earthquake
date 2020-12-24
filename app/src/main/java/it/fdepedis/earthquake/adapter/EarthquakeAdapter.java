@@ -1,6 +1,7 @@
 package it.fdepedis.earthquake.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,10 +9,13 @@ import android.widget.TextView;
 import it.fdepedis.earthquake.R;
 import java.util.List;
 import androidx.recyclerview.widget.RecyclerView;
+import it.fdepedis.earthquake.activity.EarthquakeActivity;
 import it.fdepedis.earthquake.model.EarthquakeBean;
 import it.fdepedis.earthquake.model.FeatureBean;
 
 public class EarthquakeAdapter extends RecyclerView.Adapter<EarthquakeAdapter.EarthquakeViewHolder> {
+
+    private static final String LOG_TAG = EarthquakeActivity.class.getName();
 
     private List<FeatureBean> featureList;
     private Context context;

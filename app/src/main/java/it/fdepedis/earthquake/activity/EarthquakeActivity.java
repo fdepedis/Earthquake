@@ -9,14 +9,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.loader.app.LoaderManager;
-import androidx.loader.content.Loader;
 import it.fdepedis.earthquake.R;
 import it.fdepedis.earthquake.adapter.EarthquakeAdapter;
 import it.fdepedis.earthquake.model.EarthquakeBean;
@@ -25,6 +20,7 @@ import it.fdepedis.earthquake.network.GetDataService;
 import it.fdepedis.earthquake.network.RetrofitClientInstance;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +29,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import it.fdepedis.earthquake.settings.SettingsActivity;
-import it.fdepedis.earthquake.utils.Utils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -128,6 +123,20 @@ public class EarthquakeActivity extends AppCompatActivity {
     private void generateDataList(EarthquakeBean earthquakeBean) {
         Log.e(LOG_TAG, "earthquakeBean: " + earthquakeBean);
         featureBeanList = earthquakeBean.getFeatures();
+
+        Log.e(LOG_TAG, "JSON FeatureBean: " + featureBeanList.get(0).toString());
+        Log.e(LOG_TAG, "JSON PropertiesBean: " + featureBeanList.get(0).getPropertiesBean().toString());
+        Log.e(LOG_TAG, "JSON PropertiesBean Place: " + featureBeanList.get(0).getPropertiesBean().getPlace());
+        Log.e(LOG_TAG, "JSON GeometryBean: " + Arrays.toString(featureBeanList.get(0).getGeometryBean().getCoordinates()));
+        Log.e(LOG_TAG, "JSON GeometryBean type: " + featureBeanList.get(0).getGeometryBean().getType());
+
+        String[] x =  featureBeanList.get(0).getGeometryBean().getCoordinates();
+        /*String coordX = x[0];
+        String coordY = x[1];
+        String deep = x[2];*/
+        Log.e(LOG_TAG, "x: " + x[0] + " - " + "y: " + x[1] + " - " + "d: " + x[2] );
+
+
         earthquakeAdapter.setFeatureList(featureBeanList);
     }
 
