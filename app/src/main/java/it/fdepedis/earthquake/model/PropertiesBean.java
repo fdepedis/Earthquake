@@ -1,17 +1,19 @@
 package it.fdepedis.earthquake.model;
 
 import com.google.gson.annotations.SerializedName;
-import java.math.BigDecimal;
 
 public class PropertiesBean {
 
     @SerializedName("mag")
-    private BigDecimal mag;
-
+    private String mag;
     @SerializedName("place")
     private String place;
+    @SerializedName("time")
+    private String time;
+    @SerializedName("url")
+    private String url;
 
-    public BigDecimal getMag() {
+    public String getMag() {
         return mag;
     }
 
@@ -19,12 +21,20 @@ public class PropertiesBean {
         return place;
     }
 
-    public void setMag(BigDecimal mag) {
+    public void setMag(String mag) {
         this.mag = mag;
     }
 
     public void setPlace(String place) {
         this.place = place;
     }
+
+    public String getTime() { return time; }
+
+    public void setTime(String time) { this.time = time; }
+
+    public String getUrl() { return url; }
+
+    public void setUrl(String url) { this.url = url; }
 
 }

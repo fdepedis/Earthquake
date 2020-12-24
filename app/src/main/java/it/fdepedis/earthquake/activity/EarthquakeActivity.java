@@ -54,17 +54,17 @@ public class EarthquakeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_earthquake);
-
         context = this;
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading....");
         progressDialog.show();
 
-        recyclerView = findViewById(R.id.recycler_view);
         featureBeanList = new ArrayList<>();
         earthquakeAdapter = new EarthquakeAdapter(this, featureBeanList);
         mEmptyStateTextView = (TextView) findViewById(R.id.empty_view);
+
+        recyclerView = findViewById(R.id.recycler_view);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(EarthquakeActivity.this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(earthquakeAdapter);
@@ -87,7 +87,7 @@ public class EarthquakeActivity extends AppCompatActivity {
             mEmptyStateTextView.setText(R.string.no_internet_connection);
         }*/
 
-        Map<String,String> parameters = new HashMap<>();
+        Map<String, String> parameters = new HashMap<>();
         parameters.put("format", "geojson");
         parameters.put("orderby", "time");
         parameters.put("minmag", "6");
@@ -101,9 +101,19 @@ public class EarthquakeActivity extends AppCompatActivity {
         call.enqueue(new Callback<EarthquakeBean>() {
             @Override
             public void onResponse(Call<EarthquakeBean> call, Response<EarthquakeBean> response) {
-                Log.e(LOG_TAG, "response: " + response.body());
-                progressDialog.dismiss();
-                generateDataList(response.body());
+                String result;
+                if (response != null) {
+                    try {
+                        result = response.isSuccessful() ? response.body().toString() : null;
+                        Log.e(LOG_TAG, "result: " + result);
+                        progressDialog.dismiss();
+                        generateDataList(response.body());
+                    } catch (Exception e) {
+                        Log.e(LOG_TAG, "Exception: " + e.getLocalizedMessage());
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), "Code: " + response.code(), Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
@@ -116,19 +126,9 @@ public class EarthquakeActivity extends AppCompatActivity {
 
     /* Method to generate List of data using RecyclerView with custom adapter */
     private void generateDataList(EarthquakeBean earthquakeBean) {
-
         Log.e(LOG_TAG, "earthquakeBean: " + earthquakeBean);
-        recyclerView = findViewById(R.id.recycler_view);
-        //earthquakeAdapter = new EarthquakeAdapter(this, earthquakeBean);
-
         featureBeanList = earthquakeBean.getFeatures();
-
         earthquakeAdapter.setFeatureList(featureBeanList);
-
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(earthquakeAdapter);
-
     }
 
     @Override
