@@ -3,8 +3,6 @@ package it.fdepedis.earthquake.activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -21,7 +19,6 @@ import it.fdepedis.earthquake.network.GetDataService;
 import it.fdepedis.earthquake.network.RetrofitClientInstance;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,8 +26,10 @@ import java.util.Map;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import it.fdepedis.earthquake.settings.EarthquakePreferences;
 import it.fdepedis.earthquake.settings.SettingsActivity;
+import it.fdepedis.earthquake.utils.Utils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -46,6 +45,8 @@ public class EarthquakeActivity extends AppCompatActivity {
     private TextView mEmptyStateTextView;
     private ProgressDialog progressDialog;
     boolean doubleBackToExitPressedOnce = false;
+    private SwipeRefreshLayout pullToRefresh;
+    private Map<String, String> parameters = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,22 +61,44 @@ public class EarthquakeActivity extends AppCompatActivity {
         featureBeanList = new ArrayList<>();
         earthquakeAdapter = new EarthquakeAdapter(this, featureBeanList);
         mEmptyStateTextView = (TextView) findViewById(R.id.empty_view);
+        pullToRefresh = findViewById(R.id.pullToRefresh);
 
         recyclerView = findViewById(R.id.recycler_view);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(EarthquakeActivity.this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(earthquakeAdapter);
 
+        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                init();
+
+                Log.e(LOG_TAG, "pullToRefresh.setOnRefreshListener");
+
+                //Toast.makeText(context, "Pull to refresh", Toast.LENGTH_SHORT).show();
+                pullToRefresh.setColorSchemeResources(R.color.red, R.color.orange, R.color.blue, R.color.green);
+                pullToRefresh.setRefreshing(false);
+            }
+        });
+
+        init();
+
+    }
+
+    /** Method to init recycler view */
+    public void init() {
         String minMagPrefs = EarthquakePreferences.getMinMagnitudePreferences(context);
         String orderByPrefs = EarthquakePreferences.getOrderByPreferences(context);
         String numItemPrefs = EarthquakePreferences.getNumItemsPreferences(context);
 
-        Map<String, String> parameters = new HashMap<>();
+        Log.e(LOG_TAG, "minMagPrefs: " + minMagPrefs);
+        Log.e(LOG_TAG, "orderByPrefs: " + orderByPrefs);
+        Log.e(LOG_TAG, "numItemPrefs: " + numItemPrefs);
+
         parameters.put("format", "geojson");
         parameters.put("orderby", orderByPrefs);
         parameters.put("minmag", minMagPrefs);
         parameters.put("limit", numItemPrefs);
-
 
         /* Create handle for the RetrofitInstance interface */
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
@@ -106,7 +129,7 @@ public class EarthquakeActivity extends AppCompatActivity {
         });
     }
 
-    /* Method to generate List of data using RecyclerView with custom adapter */
+    /** Method to generate List of data using RecyclerView with custom adapter */
     private void generateDataList(EarthquakeBean earthquakeBean) {
         Log.e(LOG_TAG, "earthquakeBean: " + earthquakeBean);
         featureBeanList = earthquakeBean.getFeatures();

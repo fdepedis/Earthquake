@@ -22,45 +22,7 @@ public class Utils {
 
     public static Context context;
 
-    private static final String LIMIT = "1";
-    private static final String USGS_REQUEST_URL = "https://earthquake.usgs.gov/fdsnws/event/1/query";
-    //"http://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&orderby=time&minmag=6&limit=10";
-
-    public static String refreshData(Context context){
-        //new EarthquakeLoader(context, uriBuilder.toString());
-
-        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
-        //String minMagnitude = sharedPrefs.getString(valueOf(R.string.settings_min_magnitude_key), valueOf(R.string.settings_min_magnitude_default));
-
-        String minMagnitude = sharedPrefs.getString(
-                context.getString(R.string.settings_min_magnitude_key),
-                context.getString(R.string.settings_min_magnitude_default));
-
-        String orderBy = sharedPrefs.getString(
-                context.getString(R.string.settings_order_by_key),
-                context.getString(R.string.settings_order_by_default));
-
-        String numItems = sharedPrefs.getString(
-                context.getString(R.string.settings_num_item_key),
-                context.getString(R.string.settings_num_item_default));
-
-        Log.d(LOG_TAG, "minMagnitude: " + minMagnitude );
-        Log.d(LOG_TAG, "orderBy: " + orderBy );
-        Log.d(LOG_TAG, "numItems: " + numItems );
-
-        Uri uriBuilder = Uri.parse(USGS_REQUEST_URL).buildUpon()
-                .appendQueryParameter("format", "geojson")
-                .appendQueryParameter("limit", numItems)
-                .appendQueryParameter("minmag", minMagnitude)
-                .appendQueryParameter("orderby", orderBy)
-                .build();
-
-        Log.e(LOG_TAG, "uriBuilder: " + uriBuilder.toString() );
-
-        return uriBuilder.toString();
-    }
-
-    public static URL getNotificationURLByTime(Context context) {
+    /*public static URL getNotificationURLByTime(Context context) {
 
         String minMagNotification = EarthquakePreferences.getMinMagNotificationPreferences(context);
 
@@ -81,7 +43,7 @@ public class Utils {
             e.printStackTrace();
             return null;
         }
-    }
+    }*/
 
     public static String formatMagnitude(double magnitude) {
         DecimalFormat magnitudeFormat = new DecimalFormat("0.0");
