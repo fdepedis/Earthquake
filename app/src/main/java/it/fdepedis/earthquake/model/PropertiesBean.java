@@ -5,19 +5,19 @@ import com.google.gson.annotations.SerializedName;
 public class PropertiesBean {
 
     @SerializedName("mag")
-    private String mag;
+    private double mag;
     @SerializedName("place")
     private String place;
     @SerializedName("time")
-    private String time;
+    private long time;
     @SerializedName("url")
     private String url;
 
-    public String getMag() {
+    public double getMag() {
         return mag;
     }
 
-    public void setMag(String mag) {
+    public void setMag(double mag) {
         this.mag = mag;
     }
 
@@ -29,9 +29,9 @@ public class PropertiesBean {
         this.place = place;
     }
 
-    public String getTime() { return time; }
+    public long getTime() { return time; }
 
-    public void setTime(String time) { this.time = time; }
+    public void setTime(long time) { this.time = time; }
 
     public String getUrl() { return url; }
 

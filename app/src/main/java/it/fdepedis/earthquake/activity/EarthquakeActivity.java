@@ -64,28 +64,12 @@ public class EarthquakeActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(earthquakeAdapter);
 
-        ConnectivityManager connMgr = (ConnectivityManager)
-                getSystemService(Context.CONNECTIVITY_SERVICE);
 
-        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-
-        if (networkInfo != null && networkInfo.isConnected()) {
-            android.app.LoaderManager loaderManager = getLoaderManager();
-
-            Log.d(LOG_TAG, "Log - in before initLoader() call");
-
-
-            Log.d(LOG_TAG, "Log - in after initLoader() call");
-        } /*else {
-            View loadingIndicator = findViewById(R.id.loading_indicator);
-            loadingIndicator.setVisibility(View.GONE);
-            mEmptyStateTextView.setText(R.string.no_internet_connection);
-        }*/
 
         Map<String, String> parameters = new HashMap<>();
         parameters.put("format", "geojson");
         parameters.put("orderby", "time");
-        parameters.put("minmag", "6");
+        parameters.put("minmag", "2");
         //parameters.put("maxmagnitude", "6");
         parameters.put("limit", "10");
 
@@ -124,18 +108,17 @@ public class EarthquakeActivity extends AppCompatActivity {
         Log.e(LOG_TAG, "earthquakeBean: " + earthquakeBean);
         featureBeanList = earthquakeBean.getFeatures();
 
-        Log.e(LOG_TAG, "JSON FeatureBean: " + featureBeanList.get(0).toString());
+/*        Log.e(LOG_TAG, "JSON FeatureBean: " + featureBeanList.get(0).toString());
         Log.e(LOG_TAG, "JSON PropertiesBean: " + featureBeanList.get(0).getPropertiesBean().toString());
         Log.e(LOG_TAG, "JSON PropertiesBean Place: " + featureBeanList.get(0).getPropertiesBean().getPlace());
         Log.e(LOG_TAG, "JSON GeometryBean: " + Arrays.toString(featureBeanList.get(0).getGeometryBean().getCoordinates()));
         Log.e(LOG_TAG, "JSON GeometryBean type: " + featureBeanList.get(0).getGeometryBean().getType());
 
         String[] x =  featureBeanList.get(0).getGeometryBean().getCoordinates();
-        /*String coordX = x[0];
+        *//*String coordX = x[0];
         String coordY = x[1];
-        String deep = x[2];*/
-        Log.e(LOG_TAG, "x: " + x[0] + " - " + "y: " + x[1] + " - " + "d: " + x[2] );
-
+        String deep = x[2];*//*
+        Log.e(LOG_TAG, "x: " + x[0] + " - " + "y: " + x[1] + " - " + "d: " + x[2] );*/
 
         earthquakeAdapter.setFeatureList(featureBeanList);
     }
