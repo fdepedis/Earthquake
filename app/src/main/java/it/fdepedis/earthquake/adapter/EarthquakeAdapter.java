@@ -1,66 +1,116 @@
 package it.fdepedis.earthquake.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.GradientDrawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import it.fdepedis.earthquake.R;
 
-import com.jakewharton.picasso.OkHttp3Downloader;
-import com.squareup.picasso.Picasso;
+import java.util.Date;
 import java.util.List;
 import androidx.recyclerview.widget.RecyclerView;
+import it.fdepedis.earthquake.activity.EarthquakeActivity;
 import it.fdepedis.earthquake.model.EarthquakeBean;
+import it.fdepedis.earthquake.model.FeatureBean;
+import it.fdepedis.earthquake.utils.Utils;
 
-public class EarthquakeAdapter extends RecyclerView.Adapter<EarthquakeAdapter.PhotoViewHolder> {
+public class EarthquakeAdapter extends RecyclerView.Adapter<EarthquakeAdapter.EarthquakeViewHolder> {
 
-    private List<EarthquakeBean> dataList;
+    private static final String LOG_TAG = EarthquakeActivity.class.getName();
+
+    private static final String LOCATION_SEPARATOR = " of ";
+    private List<FeatureBean> featureList;
     private Context context;
 
-    public EarthquakeAdapter(Context context, List<EarthquakeBean> dataList){
+    public EarthquakeAdapter(Context context, List<FeatureBean> featureList){
         this.context = context;
-        this.dataList = dataList;
+        this.featureList = featureList;
     }
 
-    class PhotoViewHolder extends RecyclerView.ViewHolder {
+    class EarthquakeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public final View mView;
 
-        TextView txtTitle;
-        private ImageView coverImage;
+        TextView txtMagnitude;
+        TextView txtPrimaryLocation;
+        TextView txtLocationOffset;
+        TextView txtDate;
+        TextView txtTime;
 
-        PhotoViewHolder(View itemView) {
+        EarthquakeViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
 
-            txtTitle = mView.findViewById(R.id.title);
-            coverImage = mView.findViewById(R.id.coverImage);
+            txtMagnitude = mView.findViewById(R.id.magnitude);
+            txtPrimaryLocation = mView.findViewById(R.id.primary_location);
+            txtLocationOffset = mView.findViewById(R.id.location_offset);
+            txtDate = mView.findViewById(R.id.date);
+            txtTime = mView.findViewById(R.id.time);
+        }
+
+        @Override
+        public void onClick(View v) {
+
         }
     }
 
     @Override
-    public PhotoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public EarthquakeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.photo_row, parent, false);
-        return new PhotoViewHolder(view);
+        View view = layoutInflater.inflate(R.layout.earthquake_row, parent, false);
+        return new EarthquakeViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(PhotoViewHolder holder, int position) {
+    public void onBindViewHolder(EarthquakeViewHolder holder, int position) {
 
-        holder.txtTitle.setText(dataList.get(position).getTitle());
+        /** Format Magnitude */
+        String formattedMagnitude = Utils.formatMagnitude(featureList.get(position).getPropertiesBean().getMag());
+        holder.txtMagnitude.setText(formattedMagnitude);
 
-        Picasso.Builder builder = new Picasso.Builder(context);
-        builder.downloader(new OkHttp3Downloader(context));
-        builder.build().load(dataList.get(position).getThumbnailUrl())
-                .placeholder((R.drawable.ic_launcher_background))
-                .error(R.drawable.ic_launcher_background)
-                .into(holder.coverImage);
+        GradientDrawable magnitudeCircle = (GradientDrawable) holder.txtMagnitude.getBackground();
+        int magnitudeColor = Utils.getMagnitudeColor(context, featureList.get(position).getPropertiesBean().getMag());
+        magnitudeCircle.setColor(magnitudeColor);
+
+        /** Format Location */
+        String originalLocation = featureList.get(position).getPropertiesBean().getPlace();
+        String primaryLocation;
+        String locationOffset;
+
+        // Check whether the originalLocation string contains the " of " text
+        if (originalLocation.contains(LOCATION_SEPARATOR)) {
+            String[] parts = originalLocation.split(LOCATION_SEPARATOR);
+            locationOffset = parts[0] + LOCATION_SEPARATOR;
+            primaryLocation = parts[1];
+        } else {
+            locationOffset = context.getString(R.string.near_the);
+            primaryLocation = originalLocation;
+        }
+
+        holder.txtPrimaryLocation.setText(primaryLocation);
+        holder.txtLocationOffset.setText(locationOffset);
+
+        /** Format Time */
+        Date dateObject = new Date(featureList.get(position).getPropertiesBean().getTime());
+        String formattedDate = Utils.formatDate(dateObject);
+        String formattedTime = Utils.formatTime(dateObject);
+        holder.txtDate.setText(formattedDate);
+        holder.txtTime.setText(formattedTime);
+
     }
 
     @Override
     public int getItemCount() {
-        return dataList.size();
+        if(featureList != null){
+            return featureList.size();
+        }
+        return 0;
+    }
+
+    public void setFeatureList(List<FeatureBean> featureList) {
+        this.featureList = featureList;
+        notifyDataSetChanged();
     }
 }
