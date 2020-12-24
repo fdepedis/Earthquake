@@ -16,15 +16,6 @@ import retrofit2.http.QueryMap;
 
 public interface GetDataService {
 
-    @GET("/query?")
-    @FormUrlEncoded
-    Call<JsonObject> getEarthquakes(
-            @QueryMap Map<String, String> options
-    );
-
-    @GET("query?format=geojson&orderby=time&minmag=6&limit=10")
-    Call<List<EarthquakeBean>> getEarthquakesTest();
-
     @GET("/fdsnws/event/1/query?")
     Call<EarthquakeBean> getEarthQuakes(
             @Query("format") String format,
@@ -34,14 +25,4 @@ public interface GetDataService {
     @GET("/fdsnws/event/1/query?")
     Call<EarthquakeBean> getEarthQuakes(@QueryMap Map<String,String> parameters);
 
-
-    /*@GET("/photos")
-    Call<List<EarthquakeBean>> getAllPhotos();
-
-    @GET("/fdsnws/event/1/query?")
-    Call<List<EarthquakeBean>> getEarthQuakes(
-            @Query("format") String format,
-            @Query("minmagnitude") String minMagnitude,
-            @Query("starttime") String startTime,
-            @Query("orderby") String orderBy);*/
 }
