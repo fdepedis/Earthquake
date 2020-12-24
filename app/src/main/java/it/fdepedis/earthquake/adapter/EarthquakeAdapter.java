@@ -23,15 +23,18 @@ public class EarthquakeAdapter extends RecyclerView.Adapter<EarthquakeAdapter.Ea
 
     private static final String LOCATION_SEPARATOR = " of ";
     private List<FeatureBean> featureList;
+    private OnEarthquakeClickListener mOnEarthquakeClickListener;
     private Context context;
 
-    public EarthquakeAdapter(Context context, List<FeatureBean> featureList){
+    public EarthquakeAdapter(Context context, List<FeatureBean> featureList, OnEarthquakeClickListener onEarthquakeClickListener){
         this.context = context;
         this.featureList = featureList;
+        this.mOnEarthquakeClickListener = onEarthquakeClickListener;
     }
 
     class EarthquakeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public final View mView;
+        private OnEarthquakeClickListener onEarthquakeClickListener;
 
         TextView txtMagnitude;
         TextView txtPrimaryLocation;
@@ -39,7 +42,7 @@ public class EarthquakeAdapter extends RecyclerView.Adapter<EarthquakeAdapter.Ea
         TextView txtDate;
         TextView txtTime;
 
-        EarthquakeViewHolder(View itemView) {
+        EarthquakeViewHolder(View itemView, OnEarthquakeClickListener onEarthquakeClickListener) {
             super(itemView);
             mView = itemView;
 
@@ -48,11 +51,15 @@ public class EarthquakeAdapter extends RecyclerView.Adapter<EarthquakeAdapter.Ea
             txtLocationOffset = mView.findViewById(R.id.location_offset);
             txtDate = mView.findViewById(R.id.date);
             txtTime = mView.findViewById(R.id.time);
+
+            this.onEarthquakeClickListener = onEarthquakeClickListener;
+
+            itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-
+            onEarthquakeClickListener.onEarthquakeClick(getAdapterPosition());
         }
     }
 
@@ -60,7 +67,7 @@ public class EarthquakeAdapter extends RecyclerView.Adapter<EarthquakeAdapter.Ea
     public EarthquakeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.earthquake_row, parent, false);
-        return new EarthquakeViewHolder(view);
+        return new EarthquakeViewHolder(view, mOnEarthquakeClickListener);
     }
 
     @Override
@@ -112,5 +119,9 @@ public class EarthquakeAdapter extends RecyclerView.Adapter<EarthquakeAdapter.Ea
     public void setFeatureList(List<FeatureBean> featureList) {
         this.featureList = featureList;
         notifyDataSetChanged();
+    }
+
+    public interface OnEarthquakeClickListener {
+        void onEarthquakeClick(int position);
     }
 }

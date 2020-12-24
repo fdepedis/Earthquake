@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.LongDef;
 import it.fdepedis.earthquake.R;
 import it.fdepedis.earthquake.adapter.EarthquakeAdapter;
 import it.fdepedis.earthquake.model.EarthquakeBean;
@@ -34,7 +35,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class EarthquakeActivity extends AppCompatActivity {
+public class EarthquakeActivity extends AppCompatActivity implements EarthquakeAdapter.OnEarthquakeClickListener {
 
     private static final String LOG_TAG = EarthquakeActivity.class.getName();
     private Context context;
@@ -59,7 +60,7 @@ public class EarthquakeActivity extends AppCompatActivity {
         progressDialog.show();
 
         featureBeanList = new ArrayList<>();
-        earthquakeAdapter = new EarthquakeAdapter(this, featureBeanList);
+        earthquakeAdapter = new EarthquakeAdapter(this, featureBeanList, this);
         mEmptyStateTextView = (TextView) findViewById(R.id.empty_view);
         pullToRefresh = findViewById(R.id.pullToRefresh);
 
@@ -183,5 +184,14 @@ public class EarthquakeActivity extends AppCompatActivity {
                 doubleBackToExitPressedOnce=false;
             }
         }, 2000);
+    }
+
+    @Override
+    public void onEarthquakeClick(int position) {
+        featureBeanList.get(position);
+        /*Intent intent = new Intent(this, DetailEarthquakeActivity.class);
+        intent.putExtra("position", featureBeanList.get(position));
+        startActivity(intent);*/
+        Toast.makeText(this, "position: " + /*featureBeanList.get(position)*/ position, Toast.LENGTH_SHORT).show();
     }
 }
