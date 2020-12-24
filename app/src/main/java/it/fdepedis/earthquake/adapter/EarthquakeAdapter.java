@@ -9,15 +9,16 @@ import it.fdepedis.earthquake.R;
 import java.util.List;
 import androidx.recyclerview.widget.RecyclerView;
 import it.fdepedis.earthquake.model.EarthquakeBean;
+import it.fdepedis.earthquake.model.FeatureBean;
 
 public class EarthquakeAdapter extends RecyclerView.Adapter<EarthquakeAdapter.EarthquakeViewHolder> {
 
-    private List<EarthquakeBean> dataList;
+    private List<FeatureBean> featureList;
     private Context context;
 
-    public EarthquakeAdapter(Context context, List<EarthquakeBean> dataList){
+    public EarthquakeAdapter(Context context, List<FeatureBean> featureList){
         this.context = context;
-        this.dataList = dataList;
+        this.featureList = featureList;
     }
 
     class EarthquakeViewHolder extends RecyclerView.ViewHolder {
@@ -45,7 +46,7 @@ public class EarthquakeAdapter extends RecyclerView.Adapter<EarthquakeAdapter.Ea
     @Override
     public void onBindViewHolder(EarthquakeViewHolder holder, int position) {
 
-        holder.txtPlace.setText(dataList.get(position).getPlace());
+        holder.txtPlace.setText(featureList.get(position).getPropertiesBean().getPlace());
 
         /*Picasso.Builder builder = new Picasso.Builder(context);
         builder.downloader(new OkHttp3Downloader(context));
@@ -57,11 +58,14 @@ public class EarthquakeAdapter extends RecyclerView.Adapter<EarthquakeAdapter.Ea
 
     @Override
     public int getItemCount() {
-        return dataList.size();
+        if(featureList != null){
+            return featureList.size();
+        }
+        return 0;
     }
 
-    public void setData(List<EarthquakeBean> data) {
-        this.dataList = data;
+    public void setFeatureList(List<FeatureBean> featureList) {
+        this.featureList = featureList;
         notifyDataSetChanged();
     }
 }

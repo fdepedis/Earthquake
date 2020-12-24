@@ -20,11 +20,14 @@ import androidx.loader.content.Loader;
 import it.fdepedis.earthquake.R;
 import it.fdepedis.earthquake.adapter.EarthquakeAdapter;
 import it.fdepedis.earthquake.model.EarthquakeBean;
+import it.fdepedis.earthquake.model.FeatureBean;
 import it.fdepedis.earthquake.network.GetDataService;
 import it.fdepedis.earthquake.network.RetrofitClientInstance;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -41,6 +44,7 @@ public class EarthquakeActivity extends AppCompatActivity {
     private Context context;
     private static final int EARTHQUAKE_LOADER_ID = 1;
     private EarthquakeAdapter earthquakeAdapter;
+    private List<FeatureBean> featureBeanList;
     private RecyclerView recyclerView;
     private int mPosition = RecyclerView.NO_POSITION;
     private TextView mEmptyStateTextView;
@@ -58,7 +62,8 @@ public class EarthquakeActivity extends AppCompatActivity {
         progressDialog.show();
 
         recyclerView = findViewById(R.id.recycler_view);
-        earthquakeAdapter = new EarthquakeAdapter(this, new ArrayList<EarthquakeBean>());
+        featureBeanList = new ArrayList<>();
+        earthquakeAdapter = new EarthquakeAdapter(this, featureBeanList);
         mEmptyStateTextView = (TextView) findViewById(R.id.empty_view);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(EarthquakeActivity.this);
         recyclerView.setLayoutManager(layoutManager);
@@ -82,20 +87,27 @@ public class EarthquakeActivity extends AppCompatActivity {
             mEmptyStateTextView.setText(R.string.no_internet_connection);
         }*/
 
+        Map<String,String> parameters = new HashMap<>();
+        parameters.put("format", "geojson");
+        parameters.put("orderby", "time");
+        parameters.put("minmag", "6");
+        //parameters.put("maxmagnitude", "6");
+        parameters.put("limit", "10");
+
 
         /* Create handle for the RetrofitInstance interface */
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
-        Call<List<EarthquakeBean>> call = service.getEarthquakesTest();
-        call.enqueue(new Callback<List<EarthquakeBean>>() {
+        Call<EarthquakeBean> call = service.getEarthQuakes(parameters);
+        call.enqueue(new Callback<EarthquakeBean>() {
             @Override
-            public void onResponse(Call<List<EarthquakeBean>> call, Response<List<EarthquakeBean>> response) {
+            public void onResponse(Call<EarthquakeBean> call, Response<EarthquakeBean> response) {
                 Log.e(LOG_TAG, "response: " + response.body());
                 progressDialog.dismiss();
                 generateDataList(response.body());
             }
 
             @Override
-            public void onFailure(Call<List<EarthquakeBean>> call, Throwable t) {
+            public void onFailure(Call<EarthquakeBean> call, Throwable t) {
                 progressDialog.dismiss();
                 Toast.makeText(EarthquakeActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
@@ -103,14 +115,20 @@ public class EarthquakeActivity extends AppCompatActivity {
     }
 
     /* Method to generate List of data using RecyclerView with custom adapter */
-    private void generateDataList(List<EarthquakeBean> earthquakeBean) {
+    private void generateDataList(EarthquakeBean earthquakeBean) {
 
         Log.e(LOG_TAG, "earthquakeBean: " + earthquakeBean);
         recyclerView = findViewById(R.id.recycler_view);
-        earthquakeAdapter = new EarthquakeAdapter(this, earthquakeBean);
+        //earthquakeAdapter = new EarthquakeAdapter(this, earthquakeBean);
+
+        featureBeanList = earthquakeBean.getFeatures();
+
+        earthquakeAdapter.setFeatureList(featureBeanList);
+
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(earthquakeAdapter);
+
     }
 
     @Override

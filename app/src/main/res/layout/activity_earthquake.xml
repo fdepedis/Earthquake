@@ -18,6 +18,7 @@
         android:textAppearance="?android:textAppearanceMedium" />
 
     <!-- Loading indicator is only shown before the first load -->
+    <!--
     <ProgressBar
         android:id="@+id/loading_indicator"
         style="@style/Widget.AppCompat.ProgressBar"
@@ -26,5 +27,5 @@
         android:layout_centerInParent="true"
         tools:layout_editor_absoluteX="181dp"
         tools:layout_editor_absoluteY="341dp" />
-
+    -->
 </RelativeLayout>

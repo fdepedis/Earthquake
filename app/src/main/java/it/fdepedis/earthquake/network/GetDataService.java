@@ -22,18 +22,20 @@ public interface GetDataService {
             @QueryMap Map<String, String> options
     );
 
-    @GET("/query?format=geojson&orderby=time&minmag=6&limit=10")
+    @GET("query?format=geojson&orderby=time&minmag=6&limit=10")
     Call<List<EarthquakeBean>> getEarthquakesTest();
 
-    /*@GET("/query?format=geojson&orderby={orderby}&minmag={mag}")
-            //&orderby=time&minmag=6&limit=10")
-    @FormUrlEncoded
-    Call<JsonObject> getEarthquakesTest(
-            @Path("orderby") String orderby,
-            @Path("migmag") String mag
-    );*/
+    @GET("/fdsnws/event/1/query?")
+    Call<EarthquakeBean> getEarthQuakes(
+            @Query("format") String format,
+            @Query("minmagnitude") String minMagnitude,
+            @Query("maxmagnitude") String maxMagnitude);
 
-    @GET("/photos")
+    @GET("/fdsnws/event/1/query?")
+    Call<EarthquakeBean> getEarthQuakes(@QueryMap Map<String,String> parameters);
+
+
+    /*@GET("/photos")
     Call<List<EarthquakeBean>> getAllPhotos();
 
     @GET("/fdsnws/event/1/query?")
@@ -41,5 +43,5 @@ public interface GetDataService {
             @Query("format") String format,
             @Query("minmagnitude") String minMagnitude,
             @Query("starttime") String startTime,
-            @Query("orderby") String orderBy);
+            @Query("orderby") String orderBy);*/
 }
