@@ -11,6 +11,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".activity.DetailEarthquakeActivity"></activity>
         <activity
             android:name=".activity.SplashScreenActivity"
             android:theme="@style/SplashScreenTheme">
@@ -20,9 +21,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".activity.EarthquakeActivity" />
-
         <activity
             android:name=".settings.SettingsActivity"
             android:label="@string/settings_title">
@@ -30,7 +29,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activity.EarthquakeActivity" />
         </activity>
-
     </application>
 
 </manifest>

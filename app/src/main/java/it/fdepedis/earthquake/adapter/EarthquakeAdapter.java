@@ -20,11 +20,15 @@ import it.fdepedis.earthquake.utils.Utils;
 public class EarthquakeAdapter extends RecyclerView.Adapter<EarthquakeAdapter.EarthquakeViewHolder> {
 
     private static final String LOG_TAG = EarthquakeActivity.class.getName();
-
+    private Context context;
     private static final String LOCATION_SEPARATOR = " of ";
     private List<FeatureBean> featureList;
+
     private OnEarthquakeClickListener mOnEarthquakeClickListener;
-    private Context context;
+
+    public interface OnEarthquakeClickListener {
+        void onEarthquakeClick(int position);
+    }
 
     public EarthquakeAdapter(Context context, List<FeatureBean> featureList, OnEarthquakeClickListener onEarthquakeClickListener){
         this.context = context;
@@ -121,7 +125,4 @@ public class EarthquakeAdapter extends RecyclerView.Adapter<EarthquakeAdapter.Ea
         notifyDataSetChanged();
     }
 
-    public interface OnEarthquakeClickListener {
-        void onEarthquakeClick(int position);
-    }
 }

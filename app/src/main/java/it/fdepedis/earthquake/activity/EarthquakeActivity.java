@@ -189,9 +189,9 @@ public class EarthquakeActivity extends AppCompatActivity implements EarthquakeA
     @Override
     public void onEarthquakeClick(int position) {
         featureBeanList.get(position);
-        /*Intent intent = new Intent(this, DetailEarthquakeActivity.class);
-        intent.putExtra("position", featureBeanList.get(position));
-        startActivity(intent);*/
+        Intent intent = new Intent(this, DetailEarthquakeActivity.class);
+        //intent.putExtra("position", featureBeanList.get(position));
+        startActivity(intent);
         Toast.makeText(this, "position: " + /*featureBeanList.get(position)*/ position, Toast.LENGTH_SHORT).show();
     }
 }
