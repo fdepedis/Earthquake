@@ -5,14 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.LongDef;
 import it.fdepedis.earthquake.R;
 import it.fdepedis.earthquake.adapter.EarthquakeAdapter;
 import it.fdepedis.earthquake.model.EarthquakeBean;
@@ -20,7 +18,6 @@ import it.fdepedis.earthquake.model.FeatureBean;
 import it.fdepedis.earthquake.network.GetDataService;
 import it.fdepedis.earthquake.network.RetrofitClientInstance;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,7 +29,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import it.fdepedis.earthquake.settings.EarthquakePreferences;
 import it.fdepedis.earthquake.settings.SettingsActivity;
-import it.fdepedis.earthquake.utils.Utils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -49,7 +45,7 @@ public class EarthquakeActivity extends AppCompatActivity implements EarthquakeA
     private ProgressDialog progressDialog;
     boolean doubleBackToExitPressedOnce = false;
     private SwipeRefreshLayout pullToRefresh;
-    private Map<String, String> parameters = new HashMap<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +86,8 @@ public class EarthquakeActivity extends AppCompatActivity implements EarthquakeA
 
     /** Method to init recycler view */
     public void init() {
+        Map<String, String> parameters = new HashMap<>();
+
         String minMagPrefs = EarthquakePreferences.getMinMagnitudePreferences(context);
         String orderByPrefs = EarthquakePreferences.getOrderByPreferences(context);
         String numItemPrefs = EarthquakePreferences.getNumItemsPreferences(context);
