@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,6 +20,7 @@ import it.fdepedis.earthquake.model.FeatureBean;
 import it.fdepedis.earthquake.network.GetDataService;
 import it.fdepedis.earthquake.network.RetrofitClientInstance;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -188,10 +190,18 @@ public class EarthquakeActivity extends AppCompatActivity implements EarthquakeA
 
     @Override
     public void onEarthquakeClick(int position) {
-        featureBeanList.get(position);
+        FeatureBean featureBean = featureBeanList.get(position);
+
+        Log.e(LOG_TAG, "position: " + featureBeanList.get(position) );
+        Log.e(LOG_TAG, "position: " + featureBean );
         Intent intent = new Intent(this, DetailEarthquakeActivity.class);
-        //intent.putExtra("position", featureBeanList.get(position));
+
+        //Bundle bundle = new Bundle();
+        //intent.putExtra("place", featureBean.getPropertiesBean().getPlace()/*featureBeanList.get(position)*/);
+        //intent.putExtras(bundle);
+        intent.putExtra("position", featureBean );
         startActivity(intent);
+
         Toast.makeText(this, "position: " + /*featureBeanList.get(position)*/ position, Toast.LENGTH_SHORT).show();
     }
 }

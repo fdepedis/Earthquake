@@ -2,9 +2,10 @@ package it.fdepedis.earthquake.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class EarthquakeBean {
+public class EarthquakeBean implements Serializable {
 
     @SerializedName("features")
     private List<FeatureBean> features;

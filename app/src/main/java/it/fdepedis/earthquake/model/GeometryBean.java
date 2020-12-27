@@ -2,7 +2,9 @@ package it.fdepedis.earthquake.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class GeometryBean {
+import java.io.Serializable;
+
+public class GeometryBean implements Serializable {
 
     @SerializedName("type")
     private String type;
