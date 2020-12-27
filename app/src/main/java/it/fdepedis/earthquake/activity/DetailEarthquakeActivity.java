@@ -40,6 +40,11 @@ public class DetailEarthquakeActivity extends AppCompatActivity implements Seria
             Log.e(LOG_TAG, "Date: " + Utils.formatDate(new Date(feature.getPropertiesBean().getTime())));
             Log.e(LOG_TAG, "Time: " + Utils.formatTime(new Date(feature.getPropertiesBean().getTime())));
             Log.e(LOG_TAG, "alert: " + feature.getPropertiesBean().getAlert());
+
+            String[] x =  feature.getGeometryBean().getCoordinates();
+
+            Log.e(LOG_TAG, "x: " + x[0] + " - " + "y: " + x[1] + " - " + "d: " + x[2] );
+            //Log.e(LOG_TAG, "coordinates: " + feature.getGeometryBean().getCoordinates());
         }
 
     }

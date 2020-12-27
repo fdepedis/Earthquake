@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.util.List;
 
-public class EarthquakeBean implements Serializable {
+public class EarthquakeBean {
 
     @SerializedName("features")
     private List<FeatureBean> features;
