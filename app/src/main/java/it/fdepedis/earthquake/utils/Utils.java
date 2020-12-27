@@ -11,6 +11,8 @@ import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import androidx.core.content.ContextCompat;
 import it.fdepedis.earthquake.R;
@@ -20,7 +22,26 @@ public class Utils {
 
     private static final String LOG_TAG = Utils.class.getName();
 
-    public static Context context;
+    //public static Context context;
+
+    public static Map getDefaultParamsQuery(Context context){
+        Map<String, String> parameters = new HashMap<>();
+
+        String minMagPrefs = EarthquakePreferences.getMinMagnitudePreferences(context);
+        String orderByPrefs = EarthquakePreferences.getOrderByPreferences(context);
+        String numItemPrefs = EarthquakePreferences.getNumItemsPreferences(context);
+
+        Log.e(LOG_TAG, "minMagPrefs: " + minMagPrefs);
+        Log.e(LOG_TAG, "orderByPrefs: " + orderByPrefs);
+        Log.e(LOG_TAG, "numItemPrefs: " + numItemPrefs);
+
+        parameters.put("format", "geojson");
+        parameters.put("orderby", orderByPrefs);
+        parameters.put("minmag", minMagPrefs);
+        parameters.put("limit", numItemPrefs);
+
+        return parameters;
+    }
 
     /*public static URL getNotificationURLByTime(Context context) {
 

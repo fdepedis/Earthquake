@@ -29,6 +29,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import it.fdepedis.earthquake.settings.EarthquakePreferences;
 import it.fdepedis.earthquake.settings.SettingsActivity;
+import it.fdepedis.earthquake.utils.Utils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -70,36 +71,20 @@ public class EarthquakeActivity extends AppCompatActivity implements EarthquakeA
         pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                init();
-
                 Log.e(LOG_TAG, "pullToRefresh.setOnRefreshListener");
 
-                //Toast.makeText(context, "Pull to refresh", Toast.LENGTH_SHORT).show();
+                init();
                 pullToRefresh.setColorSchemeResources(R.color.red, R.color.orange, R.color.blue, R.color.green);
                 pullToRefresh.setRefreshing(false);
             }
         });
 
         init();
-
     }
 
     /** Method to init recycler view */
     public void init() {
-        Map<String, String> parameters = new HashMap<>();
-
-        String minMagPrefs = EarthquakePreferences.getMinMagnitudePreferences(context);
-        String orderByPrefs = EarthquakePreferences.getOrderByPreferences(context);
-        String numItemPrefs = EarthquakePreferences.getNumItemsPreferences(context);
-
-        Log.e(LOG_TAG, "minMagPrefs: " + minMagPrefs);
-        Log.e(LOG_TAG, "orderByPrefs: " + orderByPrefs);
-        Log.e(LOG_TAG, "numItemPrefs: " + numItemPrefs);
-
-        parameters.put("format", "geojson");
-        parameters.put("orderby", orderByPrefs);
-        parameters.put("minmag", minMagPrefs);
-        parameters.put("limit", numItemPrefs);
+        Map<String, String> parameters = Utils.getDefaultParamsQuery(context);
 
         /* Create handle for the RetrofitInstance interface */
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
