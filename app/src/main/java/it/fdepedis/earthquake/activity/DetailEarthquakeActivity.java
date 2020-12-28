@@ -1,27 +1,30 @@
 package it.fdepedis.earthquake.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import it.fdepedis.earthquake.R;
 import it.fdepedis.earthquake.model.FeatureBean;
 import it.fdepedis.earthquake.utils.Utils;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.util.Log;
-import android.widget.TextView;
+
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
-public class DetailEarthquakeActivity extends AppCompatActivity implements Serializable {
+public class DetailEarthquakeActivity extends AppCompatActivity implements Serializable, OnMapReadyCallback {
 
     private static final String LOG_TAG = DetailEarthquakeActivity.class.getName();
-    private static final String LOCATION_SEPARATOR = " of ";
+    private static final String LOCATION_SEPARATOR_OF = " of ";
+    private static final String LOCATION_SEPARATOR_MINUS = " - ";
 
     /*@BindView(R.id.tvCityMeteo)
     TextView tvCityMeteo;*/
@@ -31,6 +34,10 @@ public class DetailEarthquakeActivity extends AppCompatActivity implements Seria
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_earthquake);
         ButterKnife.bind(this);
+
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
 
         if(getIntent().hasExtra("position")){
 
@@ -47,19 +54,44 @@ public class DetailEarthquakeActivity extends AppCompatActivity implements Seria
 
             /** Format Title */
             String originalLocation = feature.getPropertiesBean().getTitle();
+
             String textTitle = null;
 
             // Check whether the originalLocation string contains the " of " text
-            if (originalLocation.contains(LOCATION_SEPARATOR)) {
-                String[] parts = originalLocation.split(LOCATION_SEPARATOR);
+            if (originalLocation.contains(LOCATION_SEPARATOR_OF)) {
+                String[] parts = originalLocation.split(LOCATION_SEPARATOR_OF);
                 textTitle = parts[1];
-            } /*else {
-                locationOffset = context.getString(R.string.near_the);
-                primaryLocationTitle = originalLocation;
-            }*/
+            } else {
+                String[] parts = originalLocation.split(LOCATION_SEPARATOR_MINUS);
+                textTitle = parts[1];
+            }
             setTitle(textTitle);
         }
 
     }
-    
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        Log.e(LOG_TAG, "INNER onMapReady");
+        googleMap.addMarker(new MarkerOptions()
+                .position(new LatLng(37.4233438, -122.0728817))
+                .title("LinkedIn")
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+
+        googleMap.addMarker(new MarkerOptions()
+                .position(new LatLng(37.4629101,-122.2449094))
+                .title("Facebook")
+                .snippet("Facebook HQ: Menlo Park"));
+
+        googleMap.addMarker(new MarkerOptions()
+                .position(new LatLng(37.3092293, -122.1136845))
+                .title("Apple"));
+
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(37.4233438, -122.0728817), 10));
+
+/*        LatLng sydney = new LatLng(-33.852, 151.211);
+        googleMap.addMarker(new MarkerOptions()
+                .position(sydney)
+                .title("Marker in Sydney"));*/
+    }
 }
