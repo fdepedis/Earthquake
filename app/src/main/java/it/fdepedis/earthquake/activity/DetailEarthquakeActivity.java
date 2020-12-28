@@ -43,7 +43,6 @@ public class DetailEarthquakeActivity extends AppCompatActivity implements Seria
             Log.e(LOG_TAG, "alert: " + feature.getPropertiesBean().getAlert());
 
             String[] x =  feature.getGeometryBean().getCoordinates();
-
             Log.e(LOG_TAG, "x: " + x[0] + " - " + "y: " + x[1] + " - " + "d: " + x[2] );
 
             /** Format Title */
