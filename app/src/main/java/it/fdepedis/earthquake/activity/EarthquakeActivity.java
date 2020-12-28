@@ -94,6 +94,7 @@ public class EarthquakeActivity extends AppCompatActivity implements EarthquakeA
             public void onResponse(Call<EarthquakeBean> call, Response<EarthquakeBean> response) {
                 String result;
                 if (response != null) {
+                    Log.e(LOG_TAG, "response: " + response);
                     try {
                         result = response.isSuccessful() ? response.body().toString() : null;
                         Log.e(LOG_TAG, "result: " + result);

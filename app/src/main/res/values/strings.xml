@@ -9,7 +9,7 @@
     <string name="near_the">Near the</string>
 
     <!-- Text to display application label in splash screen -->
-    <string name="legal_property">FDP development - rev.2.0</string>
+    <string name="legal_property">FDP development - rev.</string>
 
     <!-- Text to display in the list when there are no earthquakes -->
     <string name="no_earthquakes">No earthquakes found.</string>

@@ -21,6 +21,7 @@ import java.util.List;
 public class DetailEarthquakeActivity extends AppCompatActivity implements Serializable {
 
     private static final String LOG_TAG = DetailEarthquakeActivity.class.getName();
+    private static final String LOCATION_SEPARATOR = " of ";
 
     /*@BindView(R.id.tvCityMeteo)
     TextView tvCityMeteo;*/
@@ -44,7 +45,20 @@ public class DetailEarthquakeActivity extends AppCompatActivity implements Seria
             String[] x =  feature.getGeometryBean().getCoordinates();
 
             Log.e(LOG_TAG, "x: " + x[0] + " - " + "y: " + x[1] + " - " + "d: " + x[2] );
-            //Log.e(LOG_TAG, "coordinates: " + feature.getGeometryBean().getCoordinates());
+
+            /** Format Title */
+            String originalLocation = feature.getPropertiesBean().getTitle();
+            String textTitle = null;
+
+            // Check whether the originalLocation string contains the " of " text
+            if (originalLocation.contains(LOCATION_SEPARATOR)) {
+                String[] parts = originalLocation.split(LOCATION_SEPARATOR);
+                textTitle = parts[1];
+            } /*else {
+                locationOffset = context.getString(R.string.near_the);
+                primaryLocationTitle = originalLocation;
+            }*/
+            setTitle(textTitle);
         }
 
     }
