@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -10,86 +9,81 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:layout_weight="3">
+        android:layout_weight="3"
+        android:orientation="horizontal">
 
-            <include layout="@layout/content_maps" />
+        <include layout="@layout/content_maps" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_weight="0">
+        android:layout_weight="0"
+        android:orientation="vertical">
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:layout_width="match_parent"
-            android:layout_height="?android:attr/listPreferredItemHeight"
-            android:orientation="horizontal"
-            android:paddingStart="16dp"
-            android:paddingLeft="16dp"
-            android:paddingEnd="16dp"
-            android:paddingRight="16dp">
+        <LinearLayout style="@style/DetailBoxTheme">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="?android:attr/listPreferredItemHeight"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/dt_place_primary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:fontFamily="sans-serif-medium"
+                    android:maxLines="1"
+                    android:textAllCaps="true"
+                    android:textColor="@color/textColorEarthquakeDetails"
+                    android:textSize="12sp"
+                    tools:text="offset" />
+
+                <TextView
+                    android:id="@+id/dt_place_loc_offset"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:textColor="@color/textColorEarthquakeLocation"
+                    android:textSize="16sp"
+                    tools:text="primary" />
+
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/place"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_gravity="center_vertical"
-                android:fontFamily="sans-serif-medium"
-                android:gravity="center"
-                android:textColor="@android:color/black"
-                android:textSize="16sp"
-                tools:text="Place" />
-
-            <TextView
-                android:id="@+id/magnitude"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_gravity="center_vertical"
-                android:background="@drawable/magnitude_circle"
-                android:fontFamily="sans-serif-medium"
-                android:gravity="center"
-                android:textColor="@android:color/white"
-                android:textSize="16sp"
-                tools:text="8.9" />
+                android:id="@+id/dt_magnitude"
+                style="@style/MagnitudeBoxTheme"
+                android:layout_width="@dimen/magnitude_detail_size"
+                android:layout_height="@dimen/magnitude_detail_size"
+                android:layout_weight="0" />
 
         </LinearLayout>
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:layout_width="match_parent"
-            android:layout_height="?android:attr/listPreferredItemHeight"
-            android:orientation="horizontal"
-            android:paddingStart="16dp"
-            android:paddingLeft="16dp"
-            android:paddingEnd="16dp"
-            android:paddingRight="16dp">
+        <LinearLayout style="@style/DetailBoxTheme">
 
             <TextView
-                android:id="@+id/place1"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_gravity="center_vertical"
-                android:fontFamily="sans-serif-medium"
-                android:gravity="center"
-                android:textColor="@android:color/black"
+                android:id="@+id/dt_time_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/textColorEarthquakeLocation"
                 android:textSize="16sp"
-                tools:text="Place" />
+                tools:text="Long placeholder" />
 
             <TextView
-                android:id="@+id/magnitude1"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_gravity="center_vertical"
-                android:background="@drawable/magnitude_circle"
-                android:fontFamily="sans-serif-medium"
-                android:gravity="center"
-                android:textColor="@android:color/white"
+                android:id="@+id/dt_time_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/textColorEarthquakeLocation"
                 android:textSize="16sp"
-                tools:text="8.9" />
+                tools:text="Long placeholder " />
 
         </LinearLayout>
 
