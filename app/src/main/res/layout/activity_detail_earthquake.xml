@@ -28,6 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?android:attr/listPreferredItemHeight"
                 android:layout_weight="1"
+                android:gravity="center_vertical"
                 android:orientation="vertical">
 
                 <TextView
@@ -67,23 +68,23 @@
 
             <TextView
                 android:id="@+id/dt_time_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:textColor="@color/textColorEarthquakeLocation"
-                android:textSize="16sp"
-                tools:text="Long placeholder" />
+                style="@style/TextBoxTheme"/>
 
             <TextView
                 android:id="@+id/dt_time_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:textColor="@color/textColorEarthquakeLocation"
-                android:textSize="16sp"
-                tools:text="Long placeholder " />
+                style="@style/TextBoxTheme" />
+
+        </LinearLayout>
+
+        <LinearLayout style="@style/DetailBoxTheme">
+
+            <TextView
+                android:id="@+id/dt_tipe_label"
+                style="@style/TextBoxTheme"/>
+
+            <TextView
+                android:id="@+id/dt_tipe_value"
+                style="@style/TextBoxTheme" />
 
         </LinearLayout>
 

@@ -1,15 +1,16 @@
 package it.fdepedis.earthquake.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
 import butterknife.ButterKnife;
 import it.fdepedis.earthquake.R;
+import it.fdepedis.earthquake.databinding.ActivityDetailEarthquakeBinding;
 import it.fdepedis.earthquake.model.FeatureBean;
 import it.fdepedis.earthquake.utils.Utils;
 
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -33,30 +34,20 @@ public class DetailEarthquakeActivity extends AppCompatActivity implements Seria
     private String originalLocation;
     private String[] parts;
     private String textTitle = null;
-
-//    @BindView(R.id.dt_place_primary)
-    TextView txtPrimaryPlaceDetail;
-    //    @BindView(R.id.dt_place_loc_offset)
-    TextView txtOffsetPlaceDetail;
-    //@BindView(R.id.dt_magnitude)
-    TextView magnitudeDetail;
-/*    private ActivityDetailBinding mDetailBinding;*/
+    private ActivityDetailEarthquakeBinding mBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        /*mDetailBinding = DataBindingUtil.setContentView(this, R.layout.activity_detail_earthquake);*/
-        setContentView(R.layout.activity_detail_earthquake);
-        //ButterKnife.bind(this);
+        // ViewBinding
+        mBinding = ActivityDetailEarthquakeBinding.inflate(getLayoutInflater());
+        View view = mBinding.getRoot();
+        setContentView(view);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
-        txtPrimaryPlaceDetail = findViewById(R.id.dt_place_primary);
-        txtOffsetPlaceDetail = findViewById(R.id.dt_place_loc_offset);
-        magnitudeDetail = findViewById(R.id.dt_magnitude);
 
         if (getIntent().hasExtra("position")) {
 
@@ -83,14 +74,14 @@ public class DetailEarthquakeActivity extends AppCompatActivity implements Seria
                 textTitle = parts[1];
             }
             setTitle(textTitle);
-            txtPrimaryPlaceDetail.setText(parts[0]);
-            txtOffsetPlaceDetail.setText(parts[1]);
+            mBinding.dtPlacePrimary.setText(parts[0]);
+            mBinding.dtPlaceLocOffset.setText(parts[1]);
 
             /** Format Magnitude */
             String formatMagnitude = Utils.formatMagnitude(feature.getPropertiesBean().getMag());
-            magnitudeDetail.setText(formatMagnitude);
+            mBinding.dtMagnitude.setText(formatMagnitude);
 
-            GradientDrawable magnitudeCircle = (GradientDrawable) magnitudeDetail.getBackground();
+            GradientDrawable magnitudeCircle = (GradientDrawable) mBinding.dtMagnitude.getBackground();
             int magnitudeColor = Utils.getMagnitudeColor(this, feature.getPropertiesBean().getMag());
             magnitudeCircle.setColor(magnitudeColor);
 
