@@ -1,7 +1,6 @@
 package it.fdepedis.earthquake.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
-import butterknife.ButterKnife;
 import it.fdepedis.earthquake.R;
 import it.fdepedis.earthquake.databinding.ActivityDetailEarthquakeBinding;
 import it.fdepedis.earthquake.model.FeatureBean;
@@ -22,6 +21,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 
 import java.io.Serializable;
+import java.util.Date;
 
 
 public class DetailEarthquakeActivity extends AppCompatActivity implements Serializable, OnMapReadyCallback {
@@ -29,6 +29,7 @@ public class DetailEarthquakeActivity extends AppCompatActivity implements Seria
     private static final String LOG_TAG = DetailEarthquakeActivity.class.getName();
     private static final String LOCATION_SEPARATOR_OF = " of ";
     private static final String LOCATION_SEPARATOR_MINUS = " - ";
+    private static final String PLACEHOLDER = " ";
 
     private String[] x;
     private String originalLocation;
@@ -52,20 +53,15 @@ public class DetailEarthquakeActivity extends AppCompatActivity implements Seria
         if (getIntent().hasExtra("position")) {
 
             FeatureBean feature = (FeatureBean) getIntent().getSerializableExtra("position");
-           /* Log.e(LOG_TAG, "feature: " + feature);
-            Log.e(LOG_TAG, "place: " + feature.getPropertiesBean().getPlace());
-            Log.e(LOG_TAG, "mag: " + feature.getPropertiesBean().getMag());
-            Log.e(LOG_TAG, "Date: " + Utils.formatDate(new Date(feature.getPropertiesBean().getTime())));
-            Log.e(LOG_TAG, "Time: " + Utils.formatTime(new Date(feature.getPropertiesBean().getTime())));
-            Log.e(LOG_TAG, "alert: " + feature.getPropertiesBean().getAlert());*/
 
+            /** Coordinates */
             x = feature.getGeometryBean().getCoordinates();
             Log.e(LOG_TAG, "x: " + x[0] + " - " + "y: " + x[1] + " - " + "d: " + x[2]);
 
             /** Format Title */
             originalLocation = feature.getPropertiesBean().getTitle();
 
-                    // Check whether the originalLocation string contains the " of " text
+            // Check whether the originalLocation string contains the " of " text
             if (originalLocation.contains(LOCATION_SEPARATOR_OF)) {
                 parts = originalLocation.split(LOCATION_SEPARATOR_OF);
                 textTitle = parts[1];
@@ -74,8 +70,9 @@ public class DetailEarthquakeActivity extends AppCompatActivity implements Seria
                 textTitle = parts[1];
             }
             setTitle(textTitle);
-            mBinding.dtPlacePrimary.setText(parts[0]);
-            mBinding.dtPlaceLocOffset.setText(parts[1]);
+
+            /** Place */
+            mBinding.dtPlace.setText(parts[0]);
 
             /** Format Magnitude */
             String formatMagnitude = Utils.formatMagnitude(feature.getPropertiesBean().getMag());
@@ -84,6 +81,17 @@ public class DetailEarthquakeActivity extends AppCompatActivity implements Seria
             GradientDrawable magnitudeCircle = (GradientDrawable) mBinding.dtMagnitude.getBackground();
             int magnitudeColor = Utils.getMagnitudeColor(this, feature.getPropertiesBean().getMag());
             magnitudeCircle.setColor(magnitudeColor);
+
+            /** Time */
+            Date dateObject = new Date(feature.getPropertiesBean().getTime());
+            String formattedDate = Utils.formatDate(dateObject);
+            String formattedTime = Utils.formatTime(dateObject);
+            mBinding.dtTimeLabel.setText(R.string.dtTimeLabel);
+            mBinding.dtTimeValue.setText(PLACEHOLDER + formattedDate + " - " + formattedTime);
+
+            /** Type */
+            mBinding.dtTypeLabel.setText(R.string.dtTypeLabel);
+            mBinding.dtTypeValue.setText(PLACEHOLDER + feature.getPropertiesBean().getType());
 
         }
 

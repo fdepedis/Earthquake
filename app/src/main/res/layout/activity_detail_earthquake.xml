@@ -22,31 +22,23 @@
         android:layout_weight="0"
         android:orientation="vertical">
 
-        <LinearLayout style="@style/DetailBoxTheme">
+        <LinearLayout
+            android:layout_height="48dp"
+            android:layout_marginTop="5dp"
+            style="@style/DetailBoxTheme">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="?android:attr/listPreferredItemHeight"
+                android:layout_height="36dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/dt_place_primary"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/dt_place"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:fontFamily="sans-serif-medium"
-                    android:maxLines="1"
-                    android:textAllCaps="true"
-                    android:textColor="@color/textColorEarthquakeDetails"
-                    android:textSize="12sp"
-                    tools:text="offset" />
-
-                <TextView
-                    android:id="@+id/dt_place_loc_offset"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
                     android:ellipsize="end"
                     android:maxLines="2"
                     android:textColor="@color/textColorEarthquakeLocation"
@@ -68,6 +60,7 @@
 
             <TextView
                 android:id="@+id/dt_time_label"
+                android:textStyle="bold"
                 style="@style/TextBoxTheme"/>
 
             <TextView
@@ -79,11 +72,12 @@
         <LinearLayout style="@style/DetailBoxTheme">
 
             <TextView
-                android:id="@+id/dt_tipe_label"
+                android:id="@+id/dt_type_label"
+                android:textStyle="bold"
                 style="@style/TextBoxTheme"/>
 
             <TextView
-                android:id="@+id/dt_tipe_value"
+                android:id="@+id/dt_type_value"
                 style="@style/TextBoxTheme" />
 
         </LinearLayout>
