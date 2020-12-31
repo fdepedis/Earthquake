@@ -28,7 +28,7 @@
     <!-- Magnitude Box Theme -->
     <style name="MagnitudeBoxTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:layout_gravity">center_vertical</item>
-        <item name="android:background">@drawable/magnitude_circle</item>
+        <item name="android:background">@xml/magnitude_circle</item>
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:gravity">center</item>
         <item name="android:textColor">@android:color/white</item>
@@ -45,6 +45,13 @@
         <item name="android:textColor">@color/textColorEarthquakeLocation</item>
         <item name="android:textSize">16sp</item>
         <item name="android:text">@string/string_placeholder</item>
+    </style>
+
+    <!-- Alert Box Theme -->
+    <style name="AlertBoxTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:background">@xml/alert_rectangle</item>
+        <item name="android:gravity">center</item>
     </style>
 
 </resources>

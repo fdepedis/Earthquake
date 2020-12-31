@@ -6,12 +6,15 @@ import it.fdepedis.earthquake.databinding.ActivityDetailEarthquakeBinding;
 import it.fdepedis.earthquake.model.FeatureBean;
 import it.fdepedis.earthquake.utils.Utils;
 
+import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.android.gms.common.Feature;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -52,7 +55,12 @@ public class DetailEarthquakeActivity extends AppCompatActivity implements Seria
 
         if (getIntent().hasExtra("position")) {
 
-            FeatureBean feature = (FeatureBean) getIntent().getSerializableExtra("position");
+            final FeatureBean feature = (FeatureBean) getIntent().getSerializableExtra("position");
+
+            Log.e(LOG_TAG, "feature: " + feature.toString());
+            Log.e(LOG_TAG, "feature - Status: " + feature.getPropertiesBean().getStatus());
+            Log.e(LOG_TAG, "feature - Tsunami: " + feature.getPropertiesBean().getTsunami());
+            Log.e(LOG_TAG, "feature - Alert: " + feature.getPropertiesBean().getAlert());
 
             /** Coordinates */
             x = feature.getGeometryBean().getCoordinates();
@@ -93,6 +101,31 @@ public class DetailEarthquakeActivity extends AppCompatActivity implements Seria
             mBinding.dtTypeLabel.setText(R.string.dtTypeLabel);
             mBinding.dtTypeValue.setText(PLACEHOLDER + feature.getPropertiesBean().getType());
 
+            /** Alert */
+            mBinding.dtAlertLabel.setText(R.string.dtAlertLabel);
+            GradientDrawable alertRect = (GradientDrawable) mBinding.dtAlertValue.getBackground();
+            int alertColor = Utils.getAlertColor(this, feature.getPropertiesBean().getAlert());
+            alertRect.setColor(alertColor);
+
+            /** Status */
+            mBinding.dtStatusLabel.setText(R.string.dtStatusLabel);
+            mBinding.dtStatusValue.setText(PLACEHOLDER + feature.getPropertiesBean().getStatus());
+
+            /** Tsunami */
+            mBinding.dtTsunamiLabel.setText(R.string.dtTsunamiLabel);
+            mBinding.dtTsunamiValue.setText(PLACEHOLDER + feature.getPropertiesBean().getTsunami());
+
+            /** Web Site Url */
+            mBinding.dtUrlLabel.setText(R.string.dtWebSiteLabel);
+            mBinding.dtUrlValue.setText(PLACEHOLDER + "Open URL in Web Site USGS");
+            final Uri earthquakeUri = Uri.parse(feature.getPropertiesBean().getUrl());
+            mBinding.dtUrlValue.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent websiteIntent = new Intent(Intent.ACTION_VIEW, earthquakeUri);
+                    startActivity(websiteIntent);
+                }
+            });
         }
 
     }

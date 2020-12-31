@@ -63,4 +63,11 @@
     <color name="green">#009900</color>
     <color name="blue">#000099</color>
 
+    <!-- Color for Alert Earthquake -->
+    <color name="greenAlert">#0E730E</color>
+    <color name="yellowAlert">#FFEB3B</color>
+    <color name="orangeAlert">#FF9900</color>
+    <color name="redAlert">#C31717</color>
+    <color name="colorDefault">#5BFDFDFE</color>
+
 </resources>

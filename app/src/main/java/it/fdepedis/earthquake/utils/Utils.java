@@ -24,7 +24,7 @@ public class Utils {
 
     //public static Context context;
 
-    public static Map getDefaultParamsQuery(Context context){
+    public static Map getDefaultParamsQuery(Context context) {
         Map<String, String> parameters = new HashMap<>();
 
         String minMagPrefs = EarthquakePreferences.getMinMagnitudePreferences(context);
@@ -80,6 +80,28 @@ public class Utils {
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
 
         return timeFormat.format(dateObject);
+    }
+
+    public static int getAlertColor(Context context, String alert) {
+        int alertColorResourceId;
+        switch (alert) {
+            case "green":
+                alertColorResourceId = R.color.greenAlert;
+                break;
+            case "yellow":
+                alertColorResourceId = R.color.yellowAlert;
+                break;
+            case "orange":
+                alertColorResourceId = R.color.orangeAlert;
+                break;
+            case "red":
+                alertColorResourceId = R.color.redAlert;
+                break;
+            default:
+                alertColorResourceId = R.color.colorDefault;
+                break;
+        }
+        return ContextCompat.getColor(context, alertColorResourceId);
     }
 
     public static int getMagnitudeColor(Context context, double magnitude) {
