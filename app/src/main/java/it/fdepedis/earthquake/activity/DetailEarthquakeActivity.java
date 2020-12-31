@@ -99,7 +99,7 @@ public class DetailEarthquakeActivity extends AppCompatActivity implements Seria
 
             /** Type */
             mBinding.dtTypeLabel.setText(R.string.dtTypeLabel);
-            mBinding.dtTypeValue.setText(PLACEHOLDER + feature.getPropertiesBean().getType());
+            mBinding.dtTypeValue.setText(PLACEHOLDER + Utils.capitalize(feature.getPropertiesBean().getType()));
 
             /** Alert */
             mBinding.dtAlertLabel.setText(R.string.dtAlertLabel);
@@ -109,7 +109,7 @@ public class DetailEarthquakeActivity extends AppCompatActivity implements Seria
 
             /** Status */
             mBinding.dtStatusLabel.setText(R.string.dtStatusLabel);
-            mBinding.dtStatusValue.setText(PLACEHOLDER + feature.getPropertiesBean().getStatus());
+            mBinding.dtStatusValue.setText(PLACEHOLDER + Utils.capitalize(feature.getPropertiesBean().getStatus()));
 
             /** Tsunami */
             mBinding.dtTsunamiLabel.setText(R.string.dtTsunamiLabel);
