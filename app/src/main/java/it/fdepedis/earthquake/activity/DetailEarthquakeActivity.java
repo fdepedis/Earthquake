@@ -113,7 +113,7 @@ public class DetailEarthquakeActivity extends AppCompatActivity implements Seria
 
             /** Tsunami */
             mBinding.dtTsunamiLabel.setText(R.string.dtTsunamiLabel);
-            mBinding.dtTsunamiValue.setText(PLACEHOLDER + feature.getPropertiesBean().getTsunami());
+            mBinding.dtTsunamiValue.setText(PLACEHOLDER + Utils.formatTsunami(feature.getPropertiesBean().getTsunami()));
 
             /** Web Site Url */
             mBinding.dtUrlLabel.setText(R.string.dtWebSiteLabel);

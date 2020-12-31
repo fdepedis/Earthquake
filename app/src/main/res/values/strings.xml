@@ -69,4 +69,10 @@
     <string name="dtTsunamiLabel">Tsunami: </string>
     <string name="dtWebSiteLabel">Web Site: </string>
 
+    <!-- Label for format Value -->
+    <string name="formatTsunamiValue_0">Large events in oceanic regions</string>
+    <string name="formatTsunamiValue_1">No events in oceanic regions</string>
+    <string name="formatTsunamiValue_NA">Not Available</string>
+
+
 </resources>

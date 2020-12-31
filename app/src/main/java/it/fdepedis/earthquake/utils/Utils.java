@@ -22,7 +22,7 @@ public class Utils {
 
     private static final String LOG_TAG = Utils.class.getName();
 
-    //public static Context context;
+    public static Context context;
 
     public static Map getDefaultParamsQuery(Context context) {
         Map<String, String> parameters = new HashMap<>();
@@ -80,6 +80,22 @@ public class Utils {
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
 
         return timeFormat.format(dateObject);
+    }
+
+    public static String formatTsunami(int tsunami) {
+        String tsunamiLabel;
+        switch (tsunami) {
+            case 0:
+                tsunamiLabel = context.getResources().getString(R.string.formatTsunamiValue_0);
+                break;
+            case 1:
+                tsunamiLabel = context.getResources().getString(R.string.formatTsunamiValue_1);
+                break;
+            default:
+                tsunamiLabel = context.getResources().getString(R.string.formatTsunamiValue_NA);
+                break;
+        }
+        return  tsunamiLabel;
     }
 
     public static int getAlertColor(Context context, String alert) {
