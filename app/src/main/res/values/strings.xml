@@ -72,7 +72,7 @@
     <!-- Label for format Value -->
     <string name="formatTsunamiValue_0">Large events in oceanic regions</string>
     <string name="formatTsunamiValue_1">No events in oceanic regions</string>
-    <string name="formatTsunamiValue_NA">Not Available</string>
+    <string name="formatTsunamiValue_NA">Events not available</string>
 
 
 </resources>
