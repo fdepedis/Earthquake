@@ -92,18 +92,20 @@
                 android:layout_height="36dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:orientation="vertical">
+                android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/dt_alert_label"
+                    android:id="@+id/dalert_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
-                    android:ellipsize="end"
-                    android:maxLines="2"
                     android:textColor="@color/textColorEarthquakeLocation"
                     android:textSize="16sp"
-                    tools:text="Alert" />
+                    android:text="@string/dtAlertLabel"/>
+
+                <TextView
+                    android:id="@+id/dt_alert_not_available_label"
+                    style="@style/TextBoxTheme" />
 
             </LinearLayout>
 

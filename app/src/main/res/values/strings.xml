@@ -62,12 +62,13 @@
     <string name="settings_min_mag_notify_default" translatable="false">6</string>
 
     <!-- Label for Detail Activity -->
-    <string name="dtTimeLabel">Time: </string>
-    <string name="dtTypeLabel">Type: </string>
-    <string name="dtAlertLabel">Alert: </string>
-    <string name="dtStatusLabel">Status: </string>
-    <string name="dtTsunamiLabel">Tsunami: </string>
-    <string name="dtWebSiteLabel">Web Site: </string>
+    <string name="dtTimeLabel">Time:</string>
+    <string name="dtTypeLabel">Type:</string>
+    <string name="dtAlertLabel">Alert:</string>
+    <string name="dtStatusLabel">Status:</string>
+    <string name="dtTsunamiLabel">Tsunami:</string>
+    <string name="dtWebSiteLabel">Web Site:</string>
+    <string name="dtAlertNotAvailableLabel">Not Available</string>
 
     <!-- Label for format Value -->
     <string name="formatTsunamiValue_0">Large events in oceanic regions</string>

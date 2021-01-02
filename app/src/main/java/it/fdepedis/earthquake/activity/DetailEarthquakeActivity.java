@@ -59,6 +59,7 @@ public class DetailEarthquakeActivity extends AppCompatActivity implements Seria
 
             Log.e(LOG_TAG, "feature: " + feature.toString());
             Log.e(LOG_TAG, "feature - Status: " + feature.getPropertiesBean().getStatus());
+            Log.e(LOG_TAG, "feature - Type: " + feature.getPropertiesBean().getType());
             Log.e(LOG_TAG, "feature - Tsunami: " + feature.getPropertiesBean().getTsunami());
             Log.e(LOG_TAG, "feature - Alert: " + feature.getPropertiesBean().getAlert());
 
@@ -102,10 +103,17 @@ public class DetailEarthquakeActivity extends AppCompatActivity implements Seria
             mBinding.dtTypeValue.setText(PLACEHOLDER + Utils.capitalize(feature.getPropertiesBean().getType()));
 
             /** Alert */
-            mBinding.dtAlertLabel.setText(R.string.dtAlertLabel);
             GradientDrawable alertRect = (GradientDrawable) mBinding.dtAlertValue.getBackground();
-            int alertColor = Utils.getAlertColor(this, feature.getPropertiesBean().getAlert());
-            alertRect.setColor(alertColor);
+            if (Utils.isValid(feature.getPropertiesBean().getAlert())) {
+                mBinding.dtAlertNotAvailableLabel.setText(" ");
+                mBinding.dtAlertValue.setVisibility(View.VISIBLE);
+                int alertColor = Utils.getAlertColor(this, feature.getPropertiesBean().getAlert());
+                alertRect.setColor(alertColor);
+            } else {
+                mBinding.dtAlertNotAvailableLabel.setText(PLACEHOLDER + getString(R.string.dtAlertNotAvailableLabel));
+                mBinding.dtAlertValue.setVisibility(View.INVISIBLE);
+                alertRect.setColor(getResources().getColor(R.color.colorDefault));
+            }
 
             /** Status */
             mBinding.dtStatusLabel.setText(R.string.dtStatusLabel);
@@ -113,7 +121,7 @@ public class DetailEarthquakeActivity extends AppCompatActivity implements Seria
 
             /** Tsunami */
             mBinding.dtTsunamiLabel.setText(R.string.dtTsunamiLabel);
-            mBinding.dtTsunamiValue.setText(PLACEHOLDER + Utils.formatTsunami(feature.getPropertiesBean().getTsunami()));
+            mBinding.dtTsunamiValue.setText(PLACEHOLDER + Utils.formatTsunami(this, feature.getPropertiesBean().getTsunami()));
 
             /** Web Site Url */
             mBinding.dtUrlLabel.setText(R.string.dtWebSiteLabel);

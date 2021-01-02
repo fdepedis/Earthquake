@@ -22,7 +22,7 @@ public class Utils {
 
     private static final String LOG_TAG = Utils.class.getName();
 
-    public static Context context;
+    //public static Context context;
 
     public static Map getDefaultParamsQuery(Context context) {
         Map<String, String> parameters = new HashMap<>();
@@ -82,7 +82,7 @@ public class Utils {
         return timeFormat.format(dateObject);
     }
 
-    public static String formatTsunami(int tsunami) {
+    public static String formatTsunami(Context context, int tsunami) {
         String tsunamiLabel;
         switch (tsunami) {
             case 0:
@@ -164,5 +164,9 @@ public class Utils {
             return str;
         }
         return str.substring(0, 1).toUpperCase() + str.substring(1);
+    }
+
+    public static boolean isValid (String value){
+        return value != null && !value.isEmpty();
     }
 }
