@@ -180,9 +180,9 @@ public class Utils {
                 break;
             case 6:
             case 7:
-            case 8:
                 intensityColorResourceId = R.color.intensity2;
                 break;
+            case 8:
             case 9:
                 intensityColorResourceId = R.color.intensity3;
                 break;
