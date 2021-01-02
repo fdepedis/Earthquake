@@ -62,6 +62,7 @@ public class DetailEarthquakeActivity extends AppCompatActivity implements Seria
             Log.e(LOG_TAG, "feature - Type: " + feature.getPropertiesBean().getType());
             Log.e(LOG_TAG, "feature - Tsunami: " + feature.getPropertiesBean().getTsunami());
             Log.e(LOG_TAG, "feature - Alert: " + feature.getPropertiesBean().getAlert());
+            Log.e(LOG_TAG, "feature - Intensity: " + feature.getPropertiesBean().getIntensity());
 
             /** Coordinates */
             x = feature.getGeometryBean().getCoordinates();
@@ -110,9 +111,10 @@ public class DetailEarthquakeActivity extends AppCompatActivity implements Seria
                 int alertColor = Utils.getAlertColor(this, feature.getPropertiesBean().getAlert());
                 alertRect.setColor(alertColor);
             } else {
-                mBinding.dtAlertNotAvailableLabel.setText(PLACEHOLDER + getString(R.string.dtAlertNotAvailableLabel));
-                mBinding.dtAlertValue.setVisibility(View.INVISIBLE);
-                alertRect.setColor(getResources().getColor(R.color.colorDefault));
+                mBinding.dtAlertNotAvailableLabel.setText(PLACEHOLDER + getString(R.string.dtPropertyNotAvailableLabel));
+                mBinding.dtAlertValue.setVisibility(View.VISIBLE);
+                int alertColor = getResources().getColor(R.color.colorDefault);
+                alertRect.setColor(alertColor);
             }
 
             /** Status */
@@ -122,6 +124,12 @@ public class DetailEarthquakeActivity extends AppCompatActivity implements Seria
             /** Tsunami */
             mBinding.dtTsunamiLabel.setText(R.string.dtTsunamiLabel);
             mBinding.dtTsunamiValue.setText(PLACEHOLDER + Utils.formatTsunami(this, feature.getPropertiesBean().getTsunami()));
+
+            /** Intensity */
+            GradientDrawable intensity = (GradientDrawable) mBinding.dtIntensityValue.getBackground();
+            int intensityColor = Utils.getIntensityColor(this, feature.getPropertiesBean().getIntensity());
+            intensity.setColor(intensityColor);
+            mBinding.dtIntensityValue.setText(Utils.formatIntensity(feature.getPropertiesBean().getIntensity()));
 
             /** Web Site Url */
             mBinding.dtUrlLabel.setText(R.string.dtWebSiteLabel);

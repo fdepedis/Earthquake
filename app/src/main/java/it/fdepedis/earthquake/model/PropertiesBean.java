@@ -24,7 +24,8 @@ public class PropertiesBean implements Serializable {
     private int tsunami;
     @SerializedName("status")
     private String status;
-
+    @SerializedName("mmi")
+    private double mmi;
 
     public String getTitle() { return title; }
 
@@ -71,5 +72,11 @@ public class PropertiesBean implements Serializable {
     public String getStatus() { return status; }
 
     public void setStatus(String status) { this.status = status; }
+
+    public double getIntensity() { return mmi; }
+
+    public void setIntensity(double mmi) {
+        this.mmi = mmi;
+    }
 
 }

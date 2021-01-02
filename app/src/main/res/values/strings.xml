@@ -67,8 +67,9 @@
     <string name="dtAlertLabel">Alert:</string>
     <string name="dtStatusLabel">Status:</string>
     <string name="dtTsunamiLabel">Tsunami:</string>
+    <string name="dtIntensityLabel">Intensity:</string>
     <string name="dtWebSiteLabel">Web Site:</string>
-    <string name="dtAlertNotAvailableLabel">Not Available</string>
+    <string name="dtPropertyNotAvailableLabel">Not Available</string>
 
     <!-- Label for format Value -->
     <string name="formatTsunamiValue_0">Large events in oceanic regions</string>

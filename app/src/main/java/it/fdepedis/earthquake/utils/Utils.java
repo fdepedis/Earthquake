@@ -98,6 +98,11 @@ public class Utils {
         return  tsunamiLabel;
     }
 
+    public static String formatIntensity(double intensity) {
+        DecimalFormat intensityFormat = new DecimalFormat("0.0");
+        return intensityFormat.format(intensity);
+    }
+
     public static int getAlertColor(Context context, String alert) {
         int alertColorResourceId;
         switch (alert) {
@@ -159,6 +164,38 @@ public class Utils {
         return ContextCompat.getColor(context, magnitudeColorResourceId);
     }
 
+    public static int getIntensityColor(Context context, double intensity) {
+        int intensityColorResourceId;
+        int intensityFloor = (int) Math.floor(intensity);
+        switch (intensityFloor) {
+            case 0:
+            case 1:
+            case 2:
+                intensityColorResourceId = R.color.intensity0;
+                break;
+            case 3:
+            case 4:
+            case 5:
+                intensityColorResourceId = R.color.intensity1;
+                break;
+            case 6:
+            case 7:
+            case 8:
+                intensityColorResourceId = R.color.intensity2;
+                break;
+            case 9:
+                intensityColorResourceId = R.color.intensity3;
+                break;
+            case 10:
+                intensityColorResourceId = R.color.intensity4;
+                break;
+            default:
+                intensityColorResourceId = R.color.colorDefault;
+                break;
+        }
+        return ContextCompat.getColor(context, intensityColorResourceId);
+    }
+
     public static String capitalize(String str) {
         if(str == null || str.isEmpty()) {
             return str;
@@ -169,4 +206,5 @@ public class Utils {
     public static boolean isValid (String value){
         return value != null && !value.isEmpty();
     }
+
 }
