@@ -13,4 +13,56 @@
         <item name="colorPrimaryDark">@color/colorPrimary</item>
     </style>
 
+    <!-- Detail Box -->
+    <style name="DetailBoxTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">36dp</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingStart">@dimen/detail_padding</item>
+        <item name="android:paddingLeft">@dimen/detail_padding</item>
+        <item name="android:paddingEnd">@dimen/detail_padding</item>
+        <item name="android:paddingRight">@dimen/detail_padding</item>
+    </style>
+
+    <!-- Magnitude Box Theme -->
+    <style name="MagnitudeBoxTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:background">@xml/magnitude_circle</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:text">8.9</item>
+    </style>
+
+    <!-- Magnitude Box Theme -->
+    <style name="TextBoxTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textColor">@color/textColorEarthquakeLocation</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:text">@string/string_placeholder</item>
+    </style>
+
+    <!-- Alert Box Theme -->
+    <style name="AlertBoxTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:background">@xml/alert_rectangle</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <!-- Intensity Box Theme -->
+    <style name="IntensityBoxTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:background">@xml/intensity_rectangle</item>
+        <item name="android:gravity">center</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:text">0.0</item>
+    </style>
+
 </resources>
