@@ -2,6 +2,7 @@ package it.fdepedis.earthquake.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class EarthquakeBean {

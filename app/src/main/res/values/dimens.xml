@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Default screen padding for detail box. -->
+    <dimen name="detail_padding">16dp</dimen>
+
+    <!-- Drawable Magnitude List Sizes -->
+    <dimen name="magnitude_list_size">36dp</dimen>
+    <dimen name="magnitude_detail_size">48dp</dimen>
+    <!-- We will eventually use this to allow us to add additional padding for different screen
+         sizes
+    <dimen name="list_item_icon_margin_right">24dp</dimen>
+    -->
+</resources>
