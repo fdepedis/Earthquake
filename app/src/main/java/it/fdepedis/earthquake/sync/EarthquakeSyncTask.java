@@ -4,7 +4,10 @@ import android.content.Context;
 import android.util.Log;
 import java.net.URL;
 import java.util.Date;
+import java.util.Map;
+
 import it.fdepedis.earthquake.settings.EarthquakePreferences;
+import it.fdepedis.earthquake.utils.Utils;
 
 public class EarthquakeSyncTask {
 
@@ -13,13 +16,14 @@ public class EarthquakeSyncTask {
     synchronized public static void checkEarthquake(Context context) {
 
         try {
-            //Log.e(LOG_TAG, "syncQuakeReport: in execution");
-
             boolean notificationsEnabled = EarthquakePreferences.isNotificationsEnabled(context);
             Log.e(LOG_TAG, "notificationsEnabled: " + notificationsEnabled);
 
             if (notificationsEnabled) {
-/*
+
+                Map<String, String> parameters = Utils.getNotificationParamsQuery(context);
+
+                /*
                 URL quakeReportRequestUrl = Utils.getNotificationURLByTime(context);
 
                 String queryJSONResponse = QueryUtils.makeHttpRequest(quakeReportRequestUrl);

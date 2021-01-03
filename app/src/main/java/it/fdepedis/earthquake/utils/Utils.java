@@ -21,6 +21,7 @@ import it.fdepedis.earthquake.settings.EarthquakePreferences;
 public class Utils {
 
     private static final String LOG_TAG = Utils.class.getName();
+    private static final String LIMIT = "1";
 
     //public static Context context;
 
@@ -39,6 +40,25 @@ public class Utils {
         parameters.put("orderby", orderByPrefs);
         parameters.put("minmag", minMagPrefs);
         parameters.put("limit", numItemPrefs);
+
+        return parameters;
+    }
+
+    public static Map getNotificationParamsQuery(Context context) {
+        Map<String, String> parameters = new HashMap<>();
+
+        String minMagNotificationPrefs = EarthquakePreferences.getMinMagNotificationPreferences(context);
+        String orderByPrefs = EarthquakePreferences.getOrderByPreferences(context);
+        String numItemPrefs = EarthquakePreferences.getNumItemsPreferences(context);
+
+        Log.e(LOG_TAG, "minMagNotificationPrefs: " + minMagNotificationPrefs);
+        Log.e(LOG_TAG, "orderByPrefs: " + orderByPrefs);
+        Log.e(LOG_TAG, "numItemPrefs: " + numItemPrefs);
+
+        parameters.put("format", "geojson");
+        parameters.put("limit", LIMIT);
+        parameters.put("minmag", minMagNotificationPrefs);
+        parameters.put("orderby", "time");
 
         return parameters;
     }
