@@ -11,6 +11,10 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
+import org.json.JSONObject;
+
 import it.fdepedis.earthquake.R;
 import it.fdepedis.earthquake.adapter.EarthquakeAdapter;
 import it.fdepedis.earthquake.model.EarthquakeBean;
@@ -97,7 +101,10 @@ public class EarthquakeActivity extends AppCompatActivity implements EarthquakeA
                     Log.e(LOG_TAG, "response: " + response);
                     try {
                         result = response.isSuccessful() ? response.body().toString() : null;
-                        Log.e(LOG_TAG, "result: " + result);
+
+                        JSONObject jsonObject = new JSONObject(new Gson().toJson(response.body()));
+                        Log.e(LOG_TAG, "result: " + result + " " + jsonObject.toString());
+
                         progressDialog.dismiss();
                         generateDataList(response.body());
                     } catch (Exception e) {
