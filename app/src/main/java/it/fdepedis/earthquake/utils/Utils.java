@@ -21,6 +21,7 @@ import it.fdepedis.earthquake.settings.EarthquakePreferences;
 public class Utils {
 
     private static final String LOG_TAG = Utils.class.getName();
+    private static final String LIMIT = "1";
 
     //public static Context context;
 
@@ -43,28 +44,24 @@ public class Utils {
         return parameters;
     }
 
-    /*public static URL getNotificationURLByTime(Context context) {
+    public static Map getNotificationParamsQuery(Context context) {
+        Map<String, String> parameters = new HashMap<>();
 
-        String minMagNotification = EarthquakePreferences.getMinMagNotificationPreferences(context);
+        String minMagNotificationPrefs = EarthquakePreferences.getMinMagNotificationPreferences(context);
+        String orderByPrefs = EarthquakePreferences.getOrderByPreferences(context);
+        String numItemPrefs = EarthquakePreferences.getNumItemsPreferences(context);
 
-        // Costruisci una URL che abbia un solo elemento recente e con
-        // una magnitudine di notifica indicata nelle preferences
-        Uri uriBuilder = Uri.parse(USGS_REQUEST_URL).buildUpon()
-                .appendQueryParameter("format", "geojson")
-                .appendQueryParameter("limit", LIMIT)
-                .appendQueryParameter("minmag", minMagNotification)
-                .appendQueryParameter("orderby", "time")
-                .build();
+        Log.e(LOG_TAG, "minMagNotificationPrefs: " + minMagNotificationPrefs);
+        Log.e(LOG_TAG, "orderByPrefs: " + orderByPrefs);
+        Log.e(LOG_TAG, "numItemPrefs: " + numItemPrefs);
 
-        try{
-            URL quakeReportNotificationQueryUrlByTime = new URL(uriBuilder.toString());
-            Log.e(LOG_TAG, "quakeReportNotificationQueryUrlByTime: " + quakeReportNotificationQueryUrlByTime );
-            return quakeReportNotificationQueryUrlByTime;
-        } catch (MalformedURLException e){
-            e.printStackTrace();
-            return null;
-        }
-    }*/
+        parameters.put("format", "geojson");
+        parameters.put("limit", LIMIT);
+        parameters.put("minmag", minMagNotificationPrefs);
+        parameters.put("orderby", "time");
+
+        return parameters;
+    }
 
     public static String formatMagnitude(double magnitude) {
         DecimalFormat magnitudeFormat = new DecimalFormat("0.0");
@@ -78,7 +75,6 @@ public class Utils {
 
     public static String formatTime(Date dateObject) {
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
-
         return timeFormat.format(dateObject);
     }
 
