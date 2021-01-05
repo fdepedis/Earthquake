@@ -31,14 +31,12 @@ import java.util.concurrent.TimeUnit;
 public class EarthquakeSyncUtils {
 
     private static final String LOG_TAG = EarthquakeSyncUtils.class.getSimpleName();
-
-    //private static final int SYNC_INTERVAL_PERIODICITY = new Time(System.currentTimeMillis()).getMinutes();
     private static final int SYNC_INTERVAL_PERIODICITY = (int) TimeUnit.HOURS.toSeconds(24);
     private static final int SYNC_INTERVAL_TOLERANCE = (int) TimeUnit.HOURS.toSeconds(1);
 
     private static boolean sInitialized;
 
-    private static final String QUAKE_REPORT_SYNC_TAG = "quakereport-sync";
+    private static final String EARTHQUAKE_SYNC_TAG = "earthquake-sync";
 
     static void scheduleFirebaseJobDispatcherSync(final Context context) {
 
@@ -47,17 +45,17 @@ public class EarthquakeSyncUtils {
 
         Job syncEarthquakeJob = dispatcher.newJobBuilder()
                 .setService(EarthquakeFirebaseJobService.class)
-                .setTag(QUAKE_REPORT_SYNC_TAG)
+                .setTag(EARTHQUAKE_SYNC_TAG)
                 .setConstraints(Constraint.ON_ANY_NETWORK)
                 .setLifetime(Lifetime.FOREVER)
                 .setRecurring(true)
                 //60*60*24,60*60*24+60 => ogni giorno
-                .setTrigger(Trigger.executionWindow(
+                /*.setTrigger(Trigger.executionWindow(
                         //SYNC_INTERVAL_PERIODICITY,
                         (60*60*24),
                         //SYNC_INTERVAL_PERIODICITY + SYNC_INTERVAL_TOLERANCE))
-                        (60*60*24) + 60))
-                //.setTrigger(Trigger.executionWindow(0, 30))                                           // per i test
+                        (60*60*24) + 60))*/
+                .setTrigger(Trigger.executionWindow(0, 30))                                           // per i test
                 .setReplaceCurrent(true)
                 .build();
 
@@ -68,8 +66,6 @@ public class EarthquakeSyncUtils {
                 "                        (60*60*24) + 60)): ");
 
         dispatcher.schedule(syncEarthquakeJob);
-
-        //Log.e(LOG_TAG, "Scheduled");
     }
 
     synchronized public static void initialize(final Context context) {
@@ -79,7 +75,6 @@ public class EarthquakeSyncUtils {
         sInitialized = true;
 
         scheduleFirebaseJobDispatcherSync(context);
-
     }
 
 }

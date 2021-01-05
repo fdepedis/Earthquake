@@ -63,29 +63,6 @@ public class Utils {
         return parameters;
     }
 
-    /*public static URL getNotificationURLByTime(Context context) {
-
-        String minMagNotification = EarthquakePreferences.getMinMagNotificationPreferences(context);
-
-        // Costruisci una URL che abbia un solo elemento recente e con
-        // una magnitudine di notifica indicata nelle preferences
-        Uri uriBuilder = Uri.parse(USGS_REQUEST_URL).buildUpon()
-                .appendQueryParameter("format", "geojson")
-                .appendQueryParameter("limit", LIMIT)
-                .appendQueryParameter("minmag", minMagNotification)
-                .appendQueryParameter("orderby", "time")
-                .build();
-
-        try{
-            URL quakeReportNotificationQueryUrlByTime = new URL(uriBuilder.toString());
-            Log.e(LOG_TAG, "quakeReportNotificationQueryUrlByTime: " + quakeReportNotificationQueryUrlByTime );
-            return quakeReportNotificationQueryUrlByTime;
-        } catch (MalformedURLException e){
-            e.printStackTrace();
-            return null;
-        }
-    }*/
-
     public static String formatMagnitude(double magnitude) {
         DecimalFormat magnitudeFormat = new DecimalFormat("0.0");
         return magnitudeFormat.format(magnitude);
@@ -98,7 +75,6 @@ public class Utils {
 
     public static String formatTime(Date dateObject) {
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
-
         return timeFormat.format(dateObject);
     }
 

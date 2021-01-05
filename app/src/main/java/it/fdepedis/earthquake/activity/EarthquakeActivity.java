@@ -33,6 +33,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import it.fdepedis.earthquake.settings.EarthquakePreferences;
 import it.fdepedis.earthquake.settings.SettingsActivity;
+import it.fdepedis.earthquake.sync.EarthquakeSyncUtils;
 import it.fdepedis.earthquake.utils.Utils;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -84,6 +85,8 @@ public class EarthquakeActivity extends AppCompatActivity implements EarthquakeA
         });
 
         init();
+
+        EarthquakeSyncUtils.initialize(context);
     }
 
     /** Method to init recycler view */
