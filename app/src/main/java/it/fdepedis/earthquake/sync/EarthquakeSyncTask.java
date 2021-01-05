@@ -64,22 +64,6 @@ public class EarthquakeSyncTask {
                                 Log.e(LOG_TAG, "featureBeanList Intensity: " + featureBeanList.get(0).getPropertiesBean().getIntensity());*/
 
                                 double currMagNotification = featureBeanList.get(0).getPropertiesBean().getMag();
-                                String formatCurrMagNotification = Utils.formatMagnitude(currMagNotification);
-                                Log.e(LOG_TAG, "formatCurrMagNotification: " + formatCurrMagNotification);
-
-                                String currPlace = featureBeanList.get(0).getPropertiesBean().getPlace();
-                                Log.e(LOG_TAG, "currPlace: " + currPlace);
-
-                                long currTime = featureBeanList.get(0).getPropertiesBean().getTime();
-                                Date dateObject = new Date(currTime);
-                                String formatCurrTime = Utils.formatDate(dateObject);
-                                Log.e(LOG_TAG, "formatCurrTime: " + formatCurrTime);
-
-                                String formatCurrHour = Utils.formatTime(dateObject);
-                                Log.e(LOG_TAG, "formatCurrHour: " + formatCurrHour);
-
-                                String url = featureBeanList.get(0).getPropertiesBean().getUrl();
-                                Log.e(LOG_TAG, "url: " + url);
 
                                 String minMagnitude = EarthquakePreferences.getMinMagnitudePreferences(context);
 
@@ -89,7 +73,7 @@ public class EarthquakeSyncTask {
                                 if (currMagNotification >= Double.parseDouble(minMagnitude)) {
                                     Log.e(LOG_TAG, "ATTENZIONE: fai partire notifica ==> currMagNotification: " + currMagNotification + " >= " + "minMagnitude: " + minMagnitude);
 
-                                    NotificationUtils.notifyUserOfNewEarthquakeReport(context, formatCurrMagNotification, currPlace, formatCurrTime, formatCurrHour, url);
+                                    NotificationUtils.notifyUserOfNewEarthquakeReport(context, featureBeanList);
                                 }
                             } catch (Exception e) {
                                 Log.e(LOG_TAG, "Exception: " + e.getLocalizedMessage());

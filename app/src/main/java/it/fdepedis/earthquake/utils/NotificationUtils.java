@@ -12,10 +12,15 @@ import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
 
+import java.util.Date;
+import java.util.List;
+
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 import it.fdepedis.earthquake.R;
+import it.fdepedis.earthquake.activity.DetailEarthquakeActivity;
+import it.fdepedis.earthquake.model.FeatureBean;
 
 public class NotificationUtils {
 
@@ -28,9 +33,25 @@ public class NotificationUtils {
      */
     private static final int EARTHQUAKE_NOTIFICATION_ID = 3004;
 
-    public static void notifyUserOfNewEarthquakeReport(
-            Context context, String magnitude, String place, String currTime, String currHour,
-            String url) {
+    public static void notifyUserOfNewEarthquakeReport(Context context, List<FeatureBean> featureBeanList) {
+
+        double currMagNotification = featureBeanList.get(0).getPropertiesBean().getMag();
+        String formatCurrMagNotification = Utils.formatMagnitude(currMagNotification);
+        Log.e(LOG_TAG, "formatCurrMagNotification: " + formatCurrMagNotification);
+
+        String currPlace = featureBeanList.get(0).getPropertiesBean().getPlace();
+        Log.e(LOG_TAG, "currPlace: " + currPlace);
+
+        long currTime = featureBeanList.get(0).getPropertiesBean().getTime();
+        Date dateObject = new Date(currTime);
+        String formatCurrTime = Utils.formatDate(dateObject);
+        Log.e(LOG_TAG, "formatCurrTime: " + formatCurrTime);
+
+        String formatCurrHour = Utils.formatTime(dateObject);
+        Log.e(LOG_TAG, "formatCurrHour: " + formatCurrHour);
+
+        String url = featureBeanList.get(0).getPropertiesBean().getUrl();
+        Log.e(LOG_TAG, "url: " + url);
 
         Resources resources = context.getResources();
         int largeArtResourceId = R.mipmap.ic_launcher;
@@ -41,9 +62,9 @@ public class NotificationUtils {
                 largeArtResourceId);
 
         String notificationTitle = context.getString(R.string.app_name);
-        String notificationText = "Location: " + place +
-                "\n" + "Magnitude: " + magnitude +
-                "\n" + "Time: " + currTime + " - " + currHour;
+        String notificationText = "Location: " + currPlace +
+                "\n" + "Magnitude: " + formatCurrMagNotification +
+                "\n" + "Time: " + formatCurrTime + " - " + formatCurrHour;
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
@@ -78,8 +99,12 @@ public class NotificationUtils {
                     .setAutoCancel(true)
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
-            /*Intent detailIntentForToday = new Intent(context, DetailActivity.class);
-            detailIntentForToday.setData(todaysWeatherUri);*/
+            Intent detailIntent = new Intent(context, DetailEarthquakeActivity.class);
+            FeatureBean featureBean = featureBeanList.get(0);
+            //detailIntent.setData(featureBeanList);
+            /*Intent intent = new Intent(this, DetailEarthquakeActivity.class);*/
+            detailIntent.putExtra("position", featureBean);
+            //startActivity(intent);
 
             /*
             TaskStackBuilder taskStackBuilder = TaskStackBuilder.create(context);

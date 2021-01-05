@@ -177,7 +177,7 @@ public class EarthquakeActivity extends AppCompatActivity implements EarthquakeA
         FeatureBean featureBean = featureBeanList.get(position);
 
         Intent intent = new Intent(this, DetailEarthquakeActivity.class);
-        intent.putExtra("position", featureBean );
+        intent.putExtra("position", featureBean);
         startActivity(intent);
 
     }
