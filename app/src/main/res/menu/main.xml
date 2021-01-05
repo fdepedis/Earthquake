@@ -5,9 +5,16 @@
     tools:context=".activity.EarthquakeActivity">
 
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_tune"
         android:title="@string/settings_menu_item"
-        android:icon="@drawable/ic_filter"
+        android:icon="@drawable/ic_action_tune"
+        android:orderInCategory="2"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/action_share"
+        android:title="@string/settings_menu_item"
+        android:icon="@drawable/ic_action_share"
         android:orderInCategory="1"
         app:showAsAction="ifRoom"/>
 
