@@ -40,5 +40,6 @@ dependencies {
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     implementation 'com.jakewharton:butterknife:8.8.1'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    implementation 'com.firebase:firebase-jobdispatcher:0.8.5'
 
 }

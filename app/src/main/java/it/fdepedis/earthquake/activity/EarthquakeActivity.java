@@ -11,6 +11,10 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
+import org.json.JSONObject;
+
 import it.fdepedis.earthquake.R;
 import it.fdepedis.earthquake.adapter.EarthquakeAdapter;
 import it.fdepedis.earthquake.model.EarthquakeBean;
@@ -29,6 +33,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import it.fdepedis.earthquake.settings.EarthquakePreferences;
 import it.fdepedis.earthquake.settings.SettingsActivity;
+import it.fdepedis.earthquake.sync.EarthquakeSyncUtils;
 import it.fdepedis.earthquake.utils.Utils;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -80,6 +85,8 @@ public class EarthquakeActivity extends AppCompatActivity implements EarthquakeA
         });
 
         init();
+
+        EarthquakeSyncUtils.initialize(context);
     }
 
     /** Method to init recycler view */
@@ -97,7 +104,10 @@ public class EarthquakeActivity extends AppCompatActivity implements EarthquakeA
                     Log.e(LOG_TAG, "response: " + response);
                     try {
                         result = response.isSuccessful() ? response.body().toString() : null;
-                        Log.e(LOG_TAG, "result: " + result);
+
+                        JSONObject jsonObject = new JSONObject(new Gson().toJson(response.body()));
+                        Log.e(LOG_TAG, "result: " + result + " " + jsonObject.toString());
+
                         progressDialog.dismiss();
                         generateDataList(response.body());
                     } catch (Exception e) {
@@ -167,7 +177,7 @@ public class EarthquakeActivity extends AppCompatActivity implements EarthquakeA
         FeatureBean featureBean = featureBeanList.get(position);
 
         Intent intent = new Intent(this, DetailEarthquakeActivity.class);
-        intent.putExtra("position", featureBean );
+        intent.putExtra("position", featureBean);
         startActivity(intent);
 
     }
