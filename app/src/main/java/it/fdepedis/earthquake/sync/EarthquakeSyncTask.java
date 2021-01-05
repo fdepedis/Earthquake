@@ -45,12 +45,9 @@ public class EarthquakeSyncTask {
                 call.enqueue(new Callback<EarthquakeBean>() {
                     @Override
                     public void onResponse(Call<EarthquakeBean> call, Response<EarthquakeBean> response) {
-                        String result;
                         if (response != null) {
                             Log.e(LOG_TAG, "response: " + response);
                             try {
-                                result = response.isSuccessful() ? response.body().toString() : null;
-
                                 JSONObject jsonObject = new JSONObject(new Gson().toJson(response.body()));
                                 Log.e(LOG_TAG, "resultCallForPush: " + jsonObject.toString());
 
@@ -69,7 +66,7 @@ public class EarthquakeSyncTask {
 
                                 // se viene restituito un valore di magnitudo maggiore o uguale
                                 // a quello settato nelle preferences invia una notifica
-                                // se abilitata dalle preferences
+                                // (se abilitata dalle preferences)
                                 if (currMagNotification >= Double.parseDouble(minMagnitude)) {
                                     Log.e(LOG_TAG, "ATTENZIONE: fai partire notifica ==> currMagNotification: " + currMagNotification + " >= " + "minMagnitude: " + minMagnitude);
 
