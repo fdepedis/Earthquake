@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
+import androidx.core.app.ShareCompat;
 import it.fdepedis.earthquake.R;
 import it.fdepedis.earthquake.adapter.EarthquakeAdapter;
 import it.fdepedis.earthquake.model.EarthquakeBean;
@@ -42,6 +43,7 @@ import retrofit2.Response;
 public class EarthquakeActivity extends AppCompatActivity implements EarthquakeAdapter.OnEarthquakeClickListener {
 
     private static final String LOG_TAG = EarthquakeActivity.class.getName();
+    private static final String EARTHQUAKE_SHARE_HASHTAG = " #EarthquakeApp";
     private Context context;
     private EarthquakeAdapter earthquakeAdapter;
     private List<FeatureBean> featureBeanList;
@@ -148,6 +150,14 @@ public class EarthquakeActivity extends AppCompatActivity implements EarthquakeA
             startActivity(settingsIntent);
             return true;
         }
+
+        /* Share menu item clicked */
+        if (id == R.id.action_share) {
+            Intent shareIntent = createShareForecastIntent();
+            startActivity(shareIntent);
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -181,4 +191,15 @@ public class EarthquakeActivity extends AppCompatActivity implements EarthquakeA
         startActivity(intent);
 
     }
+
+    private Intent createShareForecastIntent() {
+        Intent shareIntent = ShareCompat.IntentBuilder.from(this)
+                .setType("text/plain")
+                .setText(/*mEarthquakeSummary + */EARTHQUAKE_SHARE_HASHTAG)
+                .getIntent();
+        shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
+        return shareIntent;
+    }
+
+    /*mEarthquakeSummary = String.format("%s - %s - %s/%s", dateText, description, highString, lowString);*/
 }
