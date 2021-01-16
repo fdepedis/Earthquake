@@ -8,15 +8,12 @@ import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
-import java.net.URL;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import it.fdepedis.earthquake.activity.EarthquakeActivity;
 import it.fdepedis.earthquake.model.EarthquakeBean;
 import it.fdepedis.earthquake.model.FeatureBean;
-import it.fdepedis.earthquake.network.GetDataService;
+import it.fdepedis.earthquake.network.ApiService;
 import it.fdepedis.earthquake.network.RetrofitClientInstance;
 import it.fdepedis.earthquake.settings.EarthquakePreferences;
 import it.fdepedis.earthquake.utils.NotificationUtils;
@@ -40,17 +37,14 @@ public class EarthquakeSyncTask {
 
                 Map<String, String> parameters = Utils.getNotificationParamsQuery(context);
 
-                GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+                ApiService service = RetrofitClientInstance.getRetrofitInstance().create(ApiService.class);
                 Call<EarthquakeBean> call = service.getEarthQuakes(parameters);
                 call.enqueue(new Callback<EarthquakeBean>() {
                     @Override
                     public void onResponse(Call<EarthquakeBean> call, Response<EarthquakeBean> response) {
                         if (response != null) {
-                            Log.e(LOG_TAG, "response: " + response);
+                            Log.e(LOG_TAG, "Inner response");
                             try {
-                                JSONObject jsonObject = new JSONObject(new Gson().toJson(response.body()));
-                                Log.e(LOG_TAG, "resultCallForPush: " + jsonObject.toString());
-
                                 featureBeanList = response.body().getFeatures();
                                 /*Log.e(LOG_TAG, "featureBeanList: " + featureBeanList);
                                 Log.e(LOG_TAG, "featureBeanList Mag: " + featureBeanList.get(0).getPropertiesBean().getMag());
