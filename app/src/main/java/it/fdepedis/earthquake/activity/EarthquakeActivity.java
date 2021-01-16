@@ -99,12 +99,12 @@ public class EarthquakeActivity extends AppCompatActivity implements EarthquakeA
             public void onResponse(Call<EarthquakeBean> call, Response<EarthquakeBean> response) {
                 String result;
                 if (response != null) {
-                    Log.e(LOG_TAG, "response: " + response);
+                    //Log.e(LOG_TAG, "response: " + response);
                     try {
                         result = response.isSuccessful() ? response.body().toString() : null;
 
                         JSONObject jsonObject = new JSONObject(new Gson().toJson(response.body()));
-                        Log.e(LOG_TAG, "result: " + result + " " + jsonObject.toString());
+                        //Log.e(LOG_TAG, "result: " + result + " " + jsonObject.toString());
 
                         progressDialog.dismiss();
                         generateDataList(response.body());

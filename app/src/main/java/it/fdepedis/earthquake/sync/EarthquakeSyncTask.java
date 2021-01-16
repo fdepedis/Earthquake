@@ -43,11 +43,8 @@ public class EarthquakeSyncTask {
                     @Override
                     public void onResponse(Call<EarthquakeBean> call, Response<EarthquakeBean> response) {
                         if (response != null) {
-                            Log.e(LOG_TAG, "response: " + response);
+                            Log.e(LOG_TAG, "Inner response");
                             try {
-                                JSONObject jsonObject = new JSONObject(new Gson().toJson(response.body()));
-                                Log.e(LOG_TAG, "resultCallForPush: " + jsonObject.toString());
-
                                 featureBeanList = response.body().getFeatures();
                                 /*Log.e(LOG_TAG, "featureBeanList: " + featureBeanList);
                                 Log.e(LOG_TAG, "featureBeanList Mag: " + featureBeanList.get(0).getPropertiesBean().getMag());
