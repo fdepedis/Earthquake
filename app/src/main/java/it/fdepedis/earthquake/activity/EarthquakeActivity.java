@@ -15,15 +15,15 @@ import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
+import androidx.core.app.ShareCompat;
 import it.fdepedis.earthquake.R;
 import it.fdepedis.earthquake.adapter.EarthquakeAdapter;
 import it.fdepedis.earthquake.model.EarthquakeBean;
 import it.fdepedis.earthquake.model.FeatureBean;
-import it.fdepedis.earthquake.network.GetDataService;
+import it.fdepedis.earthquake.network.ApiService;
 import it.fdepedis.earthquake.network.RetrofitClientInstance;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,7 +31,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import it.fdepedis.earthquake.settings.EarthquakePreferences;
 import it.fdepedis.earthquake.settings.SettingsActivity;
 import it.fdepedis.earthquake.sync.EarthquakeSyncUtils;
 import it.fdepedis.earthquake.utils.Utils;
@@ -42,6 +41,7 @@ import retrofit2.Response;
 public class EarthquakeActivity extends AppCompatActivity implements EarthquakeAdapter.OnEarthquakeClickListener {
 
     private static final String LOG_TAG = EarthquakeActivity.class.getName();
+    private static final String EARTHQUAKE_SHARE_HASHTAG = " #EarthquakeApp";
     private Context context;
     private EarthquakeAdapter earthquakeAdapter;
     private List<FeatureBean> featureBeanList;
@@ -94,19 +94,19 @@ public class EarthquakeActivity extends AppCompatActivity implements EarthquakeA
         Map<String, String> parameters = Utils.getDefaultParamsQuery(context);
 
         /* Create handle for the RetrofitInstance interface */
-        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        ApiService service = RetrofitClientInstance.getRetrofitInstance().create(ApiService.class);
         Call<EarthquakeBean> call = service.getEarthQuakes(parameters);
         call.enqueue(new Callback<EarthquakeBean>() {
             @Override
             public void onResponse(Call<EarthquakeBean> call, Response<EarthquakeBean> response) {
                 String result;
                 if (response != null) {
-                    Log.e(LOG_TAG, "response: " + response);
+                    //Log.e(LOG_TAG, "response: " + response);
                     try {
                         result = response.isSuccessful() ? response.body().toString() : null;
 
                         JSONObject jsonObject = new JSONObject(new Gson().toJson(response.body()));
-                        Log.e(LOG_TAG, "result: " + result + " " + jsonObject.toString());
+                        //Log.e(LOG_TAG, "result: " + result + " " + jsonObject.toString());
 
                         progressDialog.dismiss();
                         generateDataList(response.body());
@@ -148,6 +148,14 @@ public class EarthquakeActivity extends AppCompatActivity implements EarthquakeA
             startActivity(settingsIntent);
             return true;
         }
+
+        /* Share menu item clicked */
+        if (id == R.id.action_share) {
+            Intent shareIntent = createShareForecastIntent();
+            startActivity(shareIntent);
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -181,4 +189,15 @@ public class EarthquakeActivity extends AppCompatActivity implements EarthquakeA
         startActivity(intent);
 
     }
+
+    private Intent createShareForecastIntent() {
+        Intent shareIntent = ShareCompat.IntentBuilder.from(this)
+                .setType("text/plain")
+                .setText(/*mEarthquakeSummary + */EARTHQUAKE_SHARE_HASHTAG)
+                .getIntent();
+        shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
+        return shareIntent;
+    }
+
+    /*mEarthquakeSummary = String.format("%s - %s - %s/%s", dateText, description, highString, lowString);*/
 }

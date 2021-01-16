@@ -14,7 +14,7 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 
-public interface GetDataService {
+public interface ApiService {
 
     @GET("/fdsnws/event/1/query?")
     Call<EarthquakeBean> getEarthQuakes(
