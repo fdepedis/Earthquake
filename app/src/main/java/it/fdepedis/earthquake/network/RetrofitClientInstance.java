@@ -1,8 +1,10 @@
 package it.fdepedis.earthquake.network;
 
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import timber.log.Timber;
 
 public class RetrofitClientInstance {
 
@@ -14,12 +16,14 @@ public class RetrofitClientInstance {
 
     public static Retrofit getRetrofitInstance() {
 
+        // HttpLoggingInterceptor
+        final HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+
         // OkHttpClient. Be conscious with the order
         OkHttpClient okHttpClient = new OkHttpClient()
                 .newBuilder()
-                //.addInterceptor(httpLoggingInterceptor)
-                //.addInterceptor(encryptionInterceptor)
-                //.addInterceptor(decryptionInterceptor)
+                .addInterceptor(interceptor)
                 .build();
 
         if (retrofit == null) {
