@@ -37,6 +37,7 @@ import it.fdepedis.earthquake.utils.Utils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import timber.log.Timber;
 
 public class EarthquakeActivity extends AppCompatActivity implements EarthquakeAdapter.OnEarthquakeClickListener {
 
@@ -58,6 +59,9 @@ public class EarthquakeActivity extends AppCompatActivity implements EarthquakeA
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_earthquake);
         context = this;
+
+        Timber.tag("************* EarthquakeActivity **************");
+        Timber.d("Activity Created");
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading....");
