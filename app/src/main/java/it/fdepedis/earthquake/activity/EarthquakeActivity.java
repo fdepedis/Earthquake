@@ -19,11 +19,10 @@ import it.fdepedis.earthquake.R;
 import it.fdepedis.earthquake.adapter.EarthquakeAdapter;
 import it.fdepedis.earthquake.model.EarthquakeBean;
 import it.fdepedis.earthquake.model.FeatureBean;
-import it.fdepedis.earthquake.network.GetDataService;
+import it.fdepedis.earthquake.network.ApiService;
 import it.fdepedis.earthquake.network.RetrofitClientInstance;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,7 +30,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import it.fdepedis.earthquake.settings.EarthquakePreferences;
 import it.fdepedis.earthquake.settings.SettingsActivity;
 import it.fdepedis.earthquake.sync.EarthquakeSyncUtils;
 import it.fdepedis.earthquake.utils.Utils;
@@ -94,7 +92,7 @@ public class EarthquakeActivity extends AppCompatActivity implements EarthquakeA
         Map<String, String> parameters = Utils.getDefaultParamsQuery(context);
 
         /* Create handle for the RetrofitInstance interface */
-        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        ApiService service = RetrofitClientInstance.getRetrofitInstance().create(ApiService.class);
         Call<EarthquakeBean> call = service.getEarthQuakes(parameters);
         call.enqueue(new Callback<EarthquakeBean>() {
             @Override
