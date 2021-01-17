@@ -21,6 +21,7 @@ import it.fdepedis.earthquake.utils.Utils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import timber.log.Timber;
 
 public class EarthquakeSyncTask {
 
@@ -31,7 +32,7 @@ public class EarthquakeSyncTask {
 
         try {
             boolean notificationsEnabled = EarthquakePreferences.isNotificationsEnabled(context);
-            Log.e(LOG_TAG, "notificationsEnabled: " + notificationsEnabled);
+            Timber.e("notificationsEnabled: %s", notificationsEnabled);
 
             if (notificationsEnabled) {
 
@@ -43,7 +44,7 @@ public class EarthquakeSyncTask {
                     @Override
                     public void onResponse(Call<EarthquakeBean> call, Response<EarthquakeBean> response) {
                         if (response != null) {
-                            Log.e(LOG_TAG, "Inner response");
+                            Timber.e("Inner response");
                             try {
                                 featureBeanList = response.body().getFeatures();
                                 /*Log.e(LOG_TAG, "featureBeanList: " + featureBeanList);
@@ -62,12 +63,12 @@ public class EarthquakeSyncTask {
                                 // a quello settato nelle preferences invia una notifica
                                 // (se abilitata dalle preferences)
                                 if (currMagNotification >= Double.parseDouble(minMagnitude)) {
-                                    Log.e(LOG_TAG, "ATTENZIONE: fai partire notifica ==> currMagNotification: " + currMagNotification + " >= " + "minMagnitude: " + minMagnitude);
+                                    Timber.e("ATTENZIONE: fai partire notifica ==> currMagNotification: " + currMagNotification + " >= " + "minMagnitude: " + minMagnitude);
 
                                     NotificationUtils.notifyUserOfNewEarthquakeReport(context, featureBeanList);
                                 }
                             } catch (Exception e) {
-                                Log.e(LOG_TAG, "Exception: " + e.getLocalizedMessage());
+                                Timber.e("Exception: %s", e.getLocalizedMessage());
                             }
                         } else {
                             Toast.makeText(context, "Code: " + response.code(), Toast.LENGTH_SHORT).show();
