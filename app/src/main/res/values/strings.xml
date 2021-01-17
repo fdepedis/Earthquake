@@ -7,6 +7,9 @@
     <!-- String Placeholder -->
     <string name="string_placeholder">Long placeholder</string>
 
+    <!-- String Loading Dialog -->
+    <string name="string_loading_dialog">Loading...</string>
+
     <!-- Default text to show with the earthquake location ("Near the Pacific-Antarctic Ridge")
          if no specific kilometer distance from the primary location is given -->
     <string name="near_the">Near the</string>

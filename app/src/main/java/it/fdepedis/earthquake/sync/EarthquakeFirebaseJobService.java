@@ -8,6 +8,8 @@ import android.util.Log;
 import com.firebase.jobdispatcher.JobParameters;
 import com.firebase.jobdispatcher.JobService;
 
+import timber.log.Timber;
+
 public class EarthquakeFirebaseJobService extends JobService {
 
     private static final String LOG_TAG = EarthquakeFirebaseJobService.class.getSimpleName();
@@ -21,7 +23,7 @@ public class EarthquakeFirebaseJobService extends JobService {
         mFetchEarthquakeTask = new AsyncTask<Void, Void, Void>(){
             @Override
             protected Void doInBackground(Void... voids) {
-                Log.e(LOG_TAG, "doInBackground: FirebaseJobService in execution");
+                Timber.e("doInBackground: FirebaseJobService in execution");
                 Context context = getApplicationContext();
                 EarthquakeSyncTask.checkEarthquake(context);
 
@@ -32,7 +34,7 @@ public class EarthquakeFirebaseJobService extends JobService {
             @Override
             protected void onPostExecute(Void aVoid) {
                 jobFinished(jobParameters, false);
-                Log.e(LOG_TAG, "onPostExecute: FirebaseJobService in execution");
+                Timber.e("onPostExecute: FirebaseJobService in execution");
             }
         };
 
@@ -43,7 +45,7 @@ public class EarthquakeFirebaseJobService extends JobService {
     @Override
     public boolean onStopJob(JobParameters jobParameters) {
         if (mFetchEarthquakeTask != null) {
-            Log.e(LOG_TAG, "onStopJob: FirebaseJobService finish");
+            Timber.e("onStopJob: FirebaseJobService finish");
             mFetchEarthquakeTask.cancel(true);
         }
         return true;

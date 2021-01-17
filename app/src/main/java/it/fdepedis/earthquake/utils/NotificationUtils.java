@@ -23,6 +23,7 @@ import androidx.core.content.ContextCompat;
 import it.fdepedis.earthquake.R;
 import it.fdepedis.earthquake.activity.DetailEarthquakeActivity;
 import it.fdepedis.earthquake.model.FeatureBean;
+import timber.log.Timber;
 
 public class NotificationUtils {
 
@@ -39,21 +40,21 @@ public class NotificationUtils {
 
         double currMagNotification = featureBeanList.get(0).getPropertiesBean().getMag();
         String formatCurrMagNotification = Utils.formatMagnitude(currMagNotification);
-        Log.e(LOG_TAG, "formatCurrMagNotification: " + formatCurrMagNotification);
+        Timber.e("formatCurrMagNotification: %s", formatCurrMagNotification);
 
         String currPlace = featureBeanList.get(0).getPropertiesBean().getPlace();
-        Log.e(LOG_TAG, "currPlace: " + currPlace);
+        Timber.e("currPlace: %s", currPlace);
 
         long currTime = featureBeanList.get(0).getPropertiesBean().getTime();
         Date dateObject = new Date(currTime);
         String formatCurrTime = Utils.formatDate(dateObject);
-        Log.e(LOG_TAG, "formatCurrTime: " + formatCurrTime);
+        Timber.e("formatCurrTime: %s", formatCurrTime);
 
         String formatCurrHour = Utils.formatTime(dateObject);
-        Log.e(LOG_TAG, "formatCurrHour: " + formatCurrHour);
+        Timber.e("formatCurrHour: %s", formatCurrHour);
 
         String url = featureBeanList.get(0).getPropertiesBean().getUrl();
-        Log.e(LOG_TAG, "url: " + url);
+        Timber.e("url: %s", url);
 
         Resources resources = context.getResources();
         int largeArtResourceId = R.mipmap.ic_launcher;
@@ -70,7 +71,7 @@ public class NotificationUtils {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
-            Log.e(LOG_TAG, "notifications???");
+            Timber.e("notifications???");
 
             CharSequence name = context.getString(R.string.app_name);
             String description = context.getString(R.string.app_name);

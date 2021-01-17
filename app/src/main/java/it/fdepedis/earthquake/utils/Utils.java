@@ -1,5 +1,7 @@
 package it.fdepedis.earthquake.utils;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -17,6 +19,7 @@ import java.util.Map;
 import androidx.core.content.ContextCompat;
 import it.fdepedis.earthquake.R;
 import it.fdepedis.earthquake.settings.EarthquakePreferences;
+import timber.log.Timber;
 
 public class Utils {
 
@@ -32,9 +35,9 @@ public class Utils {
         String orderByPrefs = EarthquakePreferences.getOrderByPreferences(context);
         String numItemPrefs = EarthquakePreferences.getNumItemsPreferences(context);
 
-        Log.e(LOG_TAG, "minMagPrefs: " + minMagPrefs);
-        Log.e(LOG_TAG, "orderByPrefs: " + orderByPrefs);
-        Log.e(LOG_TAG, "numItemPrefs: " + numItemPrefs);
+        Timber.e("minMagPrefs: %s", minMagPrefs);
+        Timber.e("orderByPrefs: %s", orderByPrefs);
+        Timber.e("numItemPrefs: %s", numItemPrefs);
 
         parameters.put("format", "geojson");
         parameters.put("orderby", orderByPrefs);
@@ -51,9 +54,9 @@ public class Utils {
         String orderByPrefs = EarthquakePreferences.getOrderByPreferences(context);
         String numItemPrefs = EarthquakePreferences.getNumItemsPreferences(context);
 
-        Log.e(LOG_TAG, "minMagNotificationPrefs: " + minMagNotificationPrefs);
-        Log.e(LOG_TAG, "orderByPrefs: " + orderByPrefs);
-        Log.e(LOG_TAG, "numItemPrefs: " + numItemPrefs);
+        Timber.e("minMagNotificationPrefs: %s", minMagNotificationPrefs);
+        Timber.e("orderByPrefs: %s", orderByPrefs);
+        Timber.e("numItemPrefs: %s", numItemPrefs);
 
         parameters.put("format", "geojson");
         parameters.put("limit", LIMIT);

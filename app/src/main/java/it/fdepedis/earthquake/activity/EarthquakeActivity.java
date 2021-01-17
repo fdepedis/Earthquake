@@ -1,6 +1,5 @@
 package it.fdepedis.earthquake.activity;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +14,7 @@ import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ShareCompat;
 import it.fdepedis.earthquake.R;
 import it.fdepedis.earthquake.adapter.EarthquakeAdapter;
@@ -37,6 +37,7 @@ import it.fdepedis.earthquake.utils.Utils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import timber.log.Timber;
 
 public class EarthquakeActivity extends AppCompatActivity implements EarthquakeAdapter.OnEarthquakeClickListener {
 
@@ -48,7 +49,7 @@ public class EarthquakeActivity extends AppCompatActivity implements EarthquakeA
     private RecyclerView recyclerView;
     private int mPosition = RecyclerView.NO_POSITION;
     private TextView mEmptyStateTextView;
-    private ProgressDialog progressDialog;
+    private AlertDialog loadingDialog;
     boolean doubleBackToExitPressedOnce = false;
     private SwipeRefreshLayout pullToRefresh;
 
@@ -59,9 +60,11 @@ public class EarthquakeActivity extends AppCompatActivity implements EarthquakeA
         setContentView(R.layout.activity_earthquake);
         context = this;
 
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Loading....");
-        progressDialog.show();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(false); // if you want user to wait for some process to finish,
+        builder.setView(R.xml.layout_loading_dialog);
+        loadingDialog = builder.create();
+        loadingDialog.show();
 
         featureBeanList = new ArrayList<>();
         earthquakeAdapter = new EarthquakeAdapter(this, featureBeanList, this);
@@ -76,7 +79,7 @@ public class EarthquakeActivity extends AppCompatActivity implements EarthquakeA
         pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                Log.e(LOG_TAG, "pullToRefresh.setOnRefreshListener");
+                Timber.e("pullToRefresh.setOnRefreshListener");
 
                 init();
                 pullToRefresh.setColorSchemeResources(R.color.red, R.color.orange, R.color.blue, R.color.green);
@@ -101,17 +104,17 @@ public class EarthquakeActivity extends AppCompatActivity implements EarthquakeA
             public void onResponse(Call<EarthquakeBean> call, Response<EarthquakeBean> response) {
                 String result;
                 if (response != null) {
-                    //Log.e(LOG_TAG, "response: " + response);
+                    //Timber.e(LOG_TAG, "response: " + response);
                     try {
                         result = response.isSuccessful() ? response.body().toString() : null;
 
                         JSONObject jsonObject = new JSONObject(new Gson().toJson(response.body()));
-                        //Log.e(LOG_TAG, "result: " + result + " " + jsonObject.toString());
+                        //Timber.e(LOG_TAG, "result: " + result + " " + jsonObject.toString());
 
-                        progressDialog.dismiss();
+                        loadingDialog.dismiss();
                         generateDataList(response.body());
                     } catch (Exception e) {
-                        Log.e(LOG_TAG, "Exception: " + e.getLocalizedMessage());
+                        Timber.e("Exception: %s", e.getLocalizedMessage());
                     }
                 } else {
                     Toast.makeText(getApplicationContext(), "Code: " + response.code(), Toast.LENGTH_SHORT).show();
@@ -120,7 +123,7 @@ public class EarthquakeActivity extends AppCompatActivity implements EarthquakeA
 
             @Override
             public void onFailure(Call<EarthquakeBean> call, Throwable t) {
-                progressDialog.dismiss();
+                loadingDialog.dismiss();
                 Toast.makeText(EarthquakeActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
         });
@@ -128,7 +131,7 @@ public class EarthquakeActivity extends AppCompatActivity implements EarthquakeA
 
     /** Method to generate List of data using RecyclerView with custom adapter */
     private void generateDataList(EarthquakeBean earthquakeBean) {
-        Log.e(LOG_TAG, "earthquakeBean: " + earthquakeBean.toString());
+        Timber.e("earthquakeBean: %s", earthquakeBean.toString());
         featureBeanList = earthquakeBean.getFeatures();
 
         earthquakeAdapter.setFeatureList(featureBeanList);
@@ -180,7 +183,7 @@ public class EarthquakeActivity extends AppCompatActivity implements EarthquakeA
 
     @Override
     public void onEarthquakeClick(int position) {
-        Log.e(LOG_TAG, "position: " + featureBeanList.get(position) );
+        Timber.e("position: %s", featureBeanList.get(position));
 
         FeatureBean featureBean = featureBeanList.get(position);
 
