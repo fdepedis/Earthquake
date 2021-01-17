@@ -28,6 +28,8 @@ import com.firebase.jobdispatcher.Trigger;
 
 import java.util.concurrent.TimeUnit;
 
+import timber.log.Timber;
+
 public class EarthquakeSyncUtils {
 
     private static final String LOG_TAG = EarthquakeSyncUtils.class.getSimpleName();
@@ -59,7 +61,7 @@ public class EarthquakeSyncUtils {
                 .setReplaceCurrent(true)
                 .build();
 
-        Log.e(LOG_TAG, "Notification Trigger.executionWindow(\n" +
+        Timber.e("Notification Trigger.executionWindow(\n" +
                 "                        //SYNC_INTERVAL_PERIODICITY,\n" +
                 "                        (60*60*24),\n" +
                 "                        //SYNC_INTERVAL_PERIODICITY + SYNC_INTERVAL_TOLERANCE))\n" +

@@ -5,6 +5,7 @@ import it.fdepedis.earthquake.R;
 import it.fdepedis.earthquake.databinding.ActivityDetailEarthquakeBinding;
 import it.fdepedis.earthquake.model.FeatureBean;
 import it.fdepedis.earthquake.utils.Utils;
+import timber.log.Timber;
 
 import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
@@ -25,7 +26,6 @@ import com.google.android.gms.maps.SupportMapFragment;
 
 import java.io.Serializable;
 import java.util.Date;
-
 
 public class DetailEarthquakeActivity extends AppCompatActivity implements Serializable, OnMapReadyCallback {
 
@@ -57,16 +57,16 @@ public class DetailEarthquakeActivity extends AppCompatActivity implements Seria
 
             final FeatureBean feature = (FeatureBean) getIntent().getSerializableExtra("position");
 
-            Log.e(LOG_TAG, "feature: " + feature.toString());
-            Log.e(LOG_TAG, "feature - Status: " + feature.getPropertiesBean().getStatus());
-            Log.e(LOG_TAG, "feature - Type: " + feature.getPropertiesBean().getType());
-            Log.e(LOG_TAG, "feature - Tsunami: " + feature.getPropertiesBean().getTsunami());
-            Log.e(LOG_TAG, "feature - Alert: " + feature.getPropertiesBean().getAlert());
-            Log.e(LOG_TAG, "feature - Intensity: " + feature.getPropertiesBean().getIntensity());
+            Timber.e("feature: %s", feature.toString());
+            Timber.e("feature - Status: %s", feature.getPropertiesBean().getStatus());
+            Timber.e("feature - Type: %s", feature.getPropertiesBean().getType());
+            Timber.e("feature - Tsunami: %s", feature.getPropertiesBean().getTsunami());
+            Timber.e("feature - Alert: %s", feature.getPropertiesBean().getAlert());
+            Timber.e("feature - Intensity: %s", feature.getPropertiesBean().getIntensity());
 
             /** Coordinates */
             x = feature.getGeometryBean().getCoordinates();
-            Log.e(LOG_TAG, "x: " + x[0] + " - " + "y: " + x[1] + " - " + "d: " + x[2]);
+            Timber.e("x: " + x[0] + " - " + "y: " + x[1] + " - " + "d: " + x[2]);
 
             /** Format Title */
             originalLocation = feature.getPropertiesBean().getTitle();
@@ -148,7 +148,7 @@ public class DetailEarthquakeActivity extends AppCompatActivity implements Seria
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        Log.e(LOG_TAG, "INNER onMapReady");
+        Timber.e("INNER onMapReady");
         googleMap.addMarker(new MarkerOptions()
                         .position(new LatLng(Double.parseDouble(x[1]), Double.parseDouble(x[0])))
                         .title(parts[0])
