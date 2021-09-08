@@ -10,7 +10,6 @@ import android.util.Log;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import it.fdepedis.earthquake.BuildConfig;
 import it.fdepedis.earthquake.R;
 
 public class SplashScreenActivity extends AppCompatActivity {
