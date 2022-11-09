@@ -1,6 +1,7 @@
 package it.fdepedis.earthquake.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import it.fdepedis.earthquake.R;
 import it.fdepedis.earthquake.databinding.ActivityDetailEarthquakeBinding;
 import it.fdepedis.earthquake.model.FeatureBean;
@@ -25,6 +26,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Date;
 
 public class DetailEarthquakeActivity extends AppCompatActivity implements Serializable, OnMapReadyCallback {
@@ -74,10 +76,11 @@ public class DetailEarthquakeActivity extends AppCompatActivity implements Seria
             // Check whether the originalLocation string contains the " of " text
             if (originalLocation.contains(LOCATION_SEPARATOR_OF)) {
                 parts = originalLocation.split(LOCATION_SEPARATOR_OF);
-                textTitle = parts[1];
+                textTitle = parts[1] == null ? "None" : parts[1];
             } else {
                 parts = originalLocation.split(LOCATION_SEPARATOR_MINUS);
-                textTitle = parts[1];
+                int count = parts.length;
+                textTitle = count == 1 ? "None" : parts[1];
             }
             setTitle(textTitle);
 
