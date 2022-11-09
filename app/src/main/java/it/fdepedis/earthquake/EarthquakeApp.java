@@ -1,6 +1,7 @@
 package it.fdepedis.earthquake;
 
 import android.app.Application;
+import androidx.multidex.BuildConfig;
 import timber.log.Timber;
 
 public class EarthquakeApp extends Application {

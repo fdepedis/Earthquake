@@ -7,15 +7,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import it.fdepedis.earthquake.R;
 
 import java.util.Date;
 import java.util.List;
+
 import androidx.recyclerview.widget.RecyclerView;
+
 import it.fdepedis.earthquake.activity.EarthquakeActivity;
 import it.fdepedis.earthquake.model.EarthquakeBean;
 import it.fdepedis.earthquake.model.FeatureBean;
 import it.fdepedis.earthquake.utils.Utils;
+import timber.log.Timber;
 
 public class EarthquakeAdapter extends RecyclerView.Adapter<EarthquakeAdapter.EarthquakeViewHolder> {
 
@@ -30,7 +34,7 @@ public class EarthquakeAdapter extends RecyclerView.Adapter<EarthquakeAdapter.Ea
         void onEarthquakeClick(int position);
     }
 
-    public EarthquakeAdapter(Context context, List<FeatureBean> featureList, OnEarthquakeClickListener onEarthquakeClickListener){
+    public EarthquakeAdapter(Context context, List<FeatureBean> featureList, OnEarthquakeClickListener onEarthquakeClickListener) {
         this.context = context;
         this.featureList = featureList;
         this.mOnEarthquakeClickListener = onEarthquakeClickListener;
@@ -91,17 +95,22 @@ public class EarthquakeAdapter extends RecyclerView.Adapter<EarthquakeAdapter.Ea
         String locationOffset;
 
         // Check whether the originalLocation string contains the " of " text
-        if (originalLocation.contains(LOCATION_SEPARATOR)) {
-            String[] parts = originalLocation.split(LOCATION_SEPARATOR);
-            locationOffset = parts[0] + LOCATION_SEPARATOR;
-            primaryLocation = parts[1];
-        } else {
-            locationOffset = context.getString(R.string.near_the);
-            primaryLocation = originalLocation;
+        if (originalLocation == null) {
+            holder.txtPrimaryLocation.setText("None");
+            holder.txtLocationOffset.setText("None");
         }
-
-        holder.txtPrimaryLocation.setText(primaryLocation);
-        holder.txtLocationOffset.setText(locationOffset);
+        else {
+            if (originalLocation.contains(LOCATION_SEPARATOR)) {
+                String[] parts = originalLocation.split(LOCATION_SEPARATOR);
+                locationOffset = parts[0] + LOCATION_SEPARATOR;
+                primaryLocation = parts[1];
+            } else {
+                locationOffset = context.getString(R.string.near_the);
+                primaryLocation = originalLocation;
+            }
+            holder.txtPrimaryLocation.setText(primaryLocation);
+            holder.txtLocationOffset.setText(locationOffset);
+        }
 
         /** Format Time */
         Date dateObject = new Date(featureList.get(position).getPropertiesBean().getTime());
@@ -114,7 +123,7 @@ public class EarthquakeAdapter extends RecyclerView.Adapter<EarthquakeAdapter.Ea
 
     @Override
     public int getItemCount() {
-        if(featureList != null){
+        if (featureList != null) {
             return featureList.size();
         }
         return 0;
